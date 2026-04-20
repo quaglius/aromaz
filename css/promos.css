@@ -103,6 +103,33 @@
     radial-gradient(circle at 80% 70%, color-mix(in srgb, var(--promo-accent) 30%, transparent), transparent 55%);
   pointer-events: none;
 }
+/* Hero con foto: la foto va detrás (opacada) y un velo del color del promo */
+.promo-hero.has-photo {
+  background-image: var(--promo-photo);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.promo-hero.has-photo::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(135deg,
+      color-mix(in srgb, var(--promo-bg) 88%, transparent) 0%,
+      color-mix(in srgb, var(--promo-bg) 55%, transparent) 45%,
+      color-mix(in srgb, var(--promo-bg) 90%, transparent) 100%);
+  pointer-events: none;
+  z-index: 0;
+}
+.promo-hero.has-photo .promo-hero-bg {
+  /* sobre el velo, un toque extra de color de acento */
+  background:
+    radial-gradient(circle at 85% 75%, color-mix(in srgb, var(--promo-accent) 35%, transparent), transparent 50%);
+  z-index: 0;
+}
+.promo-hero.has-photo .promo-hero-inner { position: relative; z-index: 1; }
+.promo-hero.has-photo .promo-countdown { position: relative; z-index: 1; }
 .promo-hero-inner {
   position: relative;
   display: grid;

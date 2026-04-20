@@ -248,6 +248,22 @@
   }
 }
 
+/* ===== Botones largos: en mobile permitimos wrap para evitar overflow ===== */
+@media (max-width: 640px) {
+  .btn-lg {
+    font-size: var(--fs-sm);
+    padding: var(--sp-3) var(--sp-5);
+    min-height: 52px;
+    white-space: normal;
+    line-height: 1.2;
+    text-align: center;
+    max-width: 100%;
+  }
+  .btn {
+    max-width: 100%;
+  }
+}
+
 /* ===== Mobile nav drawer ===== */
 .mobile-drawer {
   position: fixed;

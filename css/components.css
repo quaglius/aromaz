@@ -1209,11 +1209,35 @@
 .page-hero.has-bg::before,
 .b2b-hero.has-bg::before,
 .banner-b2b.has-bg::before {
-  background: linear-gradient(135deg, rgba(10,10,10,0.86) 0%, rgba(10,10,10,0.60) 45%, rgba(10,10,10,0.88) 100%);
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(10,10,10,0.82) 0%, rgba(10,10,10,0.55) 45%, rgba(10,10,10,0.86) 100%);
 }
 .page-hero.has-bg > *,
 .b2b-hero.has-bg > *,
 .banner-b2b.has-bg > * { position: relative; z-index: 1; }
+
+/* Banner B2B con foto: más aire y un acento dorado arriba/abajo */
+.banner-b2b.has-bg {
+  padding-block: var(--sp-12);
+  min-height: 420px;
+  display: flex;
+  align-items: center;
+  border-block: 1px solid rgba(201,163,90,0.25);
+}
+.banner-b2b.has-bg h2 {
+  font-size: clamp(2.1rem, 4.2vw, 3rem);
+  letter-spacing: -0.015em;
+}
+.banner-b2b.has-bg p {
+  font-size: var(--fs-lg);
+  max-width: 640px;
+  margin-inline: auto;
+}
+@media (max-width: 720px) {
+  .banner-b2b.has-bg { min-height: 360px; padding-block: var(--sp-10); }
+}
 
 /* ========================================================================
    MOSAICO DE MARCA (home / nosotros)

@@ -27,6 +27,7 @@ AROMAZ.promos = {
       color: '#0a0a0a',
       accent: '#c9a35a',
       icon: 'fa-spray-can-sparkles',
+      photo: '/images/brand/flatlay-grid.webp',
       productFilter: p => p.bestseller || p.destacado,
       pickLimit: 8,
       evergreen: true,
@@ -47,6 +48,7 @@ AROMAZ.promos = {
       color: '#1d2a38',
       accent: '#c9a35a',
       icon: 'fa-mustache',
+      photo: '/images/brand/man-closeup.webp',
       productFilter: p => p.genero === 'masculino' || p.genero === 'unisex',
       pickLimit: 8
     },
@@ -65,6 +67,7 @@ AROMAZ.promos = {
       color: '#4a1d2e',
       accent: '#d97b93',
       icon: 'fa-heart',
+      photo: '/images/brand/couple-flowers.webp',
       productFilter: p => p.genero === 'femenino' || p.genero === 'unisex',
       pickLimit: 8
     },
@@ -83,6 +86,7 @@ AROMAZ.promos = {
       color: '#0a0a1a',
       accent: '#00e0ff',
       icon: 'fa-bolt',
+      photo: '/images/brand/ig-neon-woman.webp',
       productFilter: p => p.bestseller || p.destacado,
       pickLimit: 12
     },
@@ -101,6 +105,7 @@ AROMAZ.promos = {
       color: '#0a0a0a',
       accent: '#ff3355',
       icon: 'fa-fire',
+      photo: '/images/brand/ig-couple-silhouette.webp',
       productFilter: p => p.bestseller,
       pickLimit: 12
     },
@@ -119,6 +124,7 @@ AROMAZ.promos = {
       color: '#0f2a1f',
       accent: '#c9a35a',
       icon: 'fa-tree',
+      photo: '/images/brand/ig-wedding-candle.webp',
       productFilter: p => p.bestseller || p.destacado,
       pickLimit: 12
     },
@@ -137,6 +143,7 @@ AROMAZ.promos = {
       color: '#1a1443',
       accent: '#f0c555',
       icon: 'fa-crown',
+      photo: '/images/brand/lily-still-life.webp',
       productFilter: p => p.destacado,
       pickLimit: 8
     },
@@ -152,6 +159,7 @@ AROMAZ.promos = {
       color: '#2a1a3d',
       accent: '#f0c555',
       icon: 'fa-cake-candles',
+      photo: '/images/brand/splash-trio.webp',
       productFilter: p => p.bestseller || p.destacado,
       pickLimit: 8,
       evergreen: true
@@ -168,6 +176,7 @@ AROMAZ.promos = {
       color: '#3d0f28',
       accent: '#d97b93',
       icon: 'fa-heart',
+      photo: '/images/brand/couple-intimate.webp',
       productFilter: p => p.bestseller,
       pickLimit: 10,
       evergreen: true
@@ -250,7 +259,7 @@ AROMAZ.promos = {
     const waHref = AROMAZ.whatsappLink(cta);
 
     container.innerHTML = `
-      <section class="promo-hero" style="--promo-bg:${p.color}; --promo-accent:${p.accent};">
+      <section class="promo-hero ${p.photo ? 'has-photo' : ''}" style="--promo-bg:${p.color}; --promo-accent:${p.accent};${p.photo ? ` --promo-photo: url('${p.photo}');` : ''}">
         <div class="promo-hero-bg"></div>
         <div class="container promo-hero-inner">
           <div class="promo-hero-text">
@@ -336,8 +345,9 @@ AROMAZ.promos = {
           <h2>¿No sabés qué <em>elegir</em>?</h2>
           <p style="margin-block: var(--sp-4); color: var(--c-gray-700); line-height: 1.8;">Contanos qué gustos tiene la persona, qué fragancias le gustaron antes y para qué ocasión querés el regalo. En minutos te recomendamos opciones ideales por WhatsApp.</p>
           <a href="${waHref}" class="btn btn-whatsapp btn-lg" target="_blank" rel="noopener">
-            <i class="fab fa-whatsapp"></i> Pedir asesoramiento · Código ${p.code}
+            <i class="fab fa-whatsapp"></i> Pedir asesoramiento
           </a>
+          <p style="margin-top: var(--sp-4); color: var(--c-gray-600); font-size: var(--fs-sm);">Mencioná el código <strong style="color: var(--c-gold); letter-spacing: 0.08em;">${p.code}</strong> al iniciar el chat.</p>
         </div>
       </section>
     `;
