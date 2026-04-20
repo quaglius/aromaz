@@ -2,5 +2,15 @@ User-agent: *
 Allow: /
 Disallow: /scripts/
 Disallow: /data/caracteristicas.json
+Disallow: /manual.html
+Disallow: /images/promos-posts/
+Disallow: /carrito.html
+Disallow: /favoritos.html
+Disallow: /*?utm_
+Disallow: /*?fbclid
+Disallow: /*?gclid
 
-Sitemap: https://aromazperfumshop.com.ar/sitemap.xml
+# Permitir explícitamente las OG images (se usan en previews de shares)
+Allow: /images/og/
+
+Sitemap: https://aromazperfumshop.netlify.app/sitemap.xml

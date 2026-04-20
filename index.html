@@ -3,12 +3,30 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="robots" content="index, follow">
+  <meta name="robots" content="index, follow, max-image-preview:large">
   <meta name="author" content="Aromaz Perfum Shop">
   <meta name="theme-color" content="#0a0a0a">
 
-  <title>Aromaz Perfum Shop — Perfumes Importados | Envíos a todo el país</title>
-  <meta name="description" content="Más de 220 fragancias de Extracto Importado en stock. Femeninos, masculinos y unisex. Envíos a toda Argentina. Atención personalizada por WhatsApp.">
+  <title>Aromaz Perfum Shop · Perfumes importados en Argentina | Envíos a todo el país</title>
+  <meta name="description" content="Comprá perfumes importados en Argentina: más de 220 fragancias de Extracto Importado en stock. Envío gratis +$50.000, 10% OFF por transferencia y 3 cuotas sin interés. Atención por WhatsApp.">
+  <meta name="keywords" content="comprar perfumes argentina, perfumes importados, fragancias mujer hombre, extracto importado, perfumería online argentina, perfumes originales, tienda de perfumes">
+
+  <link rel="canonical" href="https://aromazperfumshop.netlify.app/">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Aromaz Perfum Shop">
+  <meta property="og:locale" content="es_AR">
+  <meta property="og:title" content="Aromaz Perfum Shop · Perfumes importados en Argentina">
+  <meta property="og:description" content="Más de 220 fragancias de Extracto Importado. Envío gratis +$50K, 10% OFF por transferencia, 3 cuotas sin interés. Atención por WhatsApp.">
+  <meta property="og:url" content="https://aromazperfumshop.netlify.app/">
+  <meta property="og:image" content="https://aromazperfumshop.netlify.app/images/og/default.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Aromaz Perfum Shop — Perfumes importados en Argentina">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Aromaz Perfum Shop · Perfumes importados en Argentina">
+  <meta name="twitter:description" content="Más de 220 fragancias. Envío gratis +$50K, 10% OFF por transferencia.">
+  <meta name="twitter:image" content="https://aromazperfumshop.netlify.app/images/og/default.png">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -27,9 +45,12 @@
   {
     "@context": "https://schema.org",
     "@type": "Store",
+    "@id": "https://aromazperfumshop.netlify.app/#store",
     "name": "Aromaz Perfum Shop",
-    "image": "https://aromazperfumshop.com.ar/images/logo/aromaz-instagram.jpg",
-    "description": "Distribuidores oficiales de Extracto Importado. Más de 220 fragancias en Argentina.",
+    "image": "https://aromazperfumshop.netlify.app/images/og/default.png",
+    "logo": "https://aromazperfumshop.netlify.app/images/logo/aromaz-instagram.jpg",
+    "description": "Distribuidores oficiales de Extracto Importado. Más de 220 fragancias importadas en Argentina. Envíos a todo el país.",
+    "slogan": "Encontrá tu fragancia perfecta",
     "address": {
       "@type": "PostalAddress",
       "addressLocality": "Buenos Aires",
@@ -37,9 +58,40 @@
       "addressCountry": "AR"
     },
     "telephone": "+54-9-11-6696-7597",
-    "url": "https://aromazperfumshop.com.ar",
+    "email": "hola@aromazperfumshop.com.ar",
+    "url": "https://aromazperfumshop.netlify.app",
     "priceRange": "$$",
-    "sameAs": ["https://www.instagram.com/aromazperfumshop/"]
+    "currenciesAccepted": "ARS",
+    "paymentAccepted": "Transferencia bancaria, MercadoPago, Efectivo",
+    "openingHoursSpecification": [{
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
+      "opens": "10:00",
+      "closes": "19:00"
+    }],
+    "areaServed": { "@type": "Country", "name": "Argentina" },
+    "sameAs": [
+      "https://www.instagram.com/aromazperfumshop/",
+      "https://www.facebook.com/aromazperfumshop"
+    ]
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": "https://aromazperfumshop.netlify.app/#website",
+    "url": "https://aromazperfumshop.netlify.app/",
+    "name": "Aromaz Perfum Shop",
+    "description": "Perfumes importados en Argentina",
+    "inLanguage": "es-AR",
+    "publisher": { "@id": "https://aromazperfumshop.netlify.app/#store" },
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://aromazperfumshop.netlify.app/catalogo.html?q={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
   }
   </script>
 </head>
@@ -234,8 +286,10 @@
   <script>
     AROMAZ.layout.render({
       activeNav: 'home',
-      title: 'Aromaz Perfum Shop — Perfumes Importados | Envíos a todo el país',
-      description: 'Más de 220 fragancias de Extracto Importado en stock. Envíos a toda Argentina. Atención personalizada por WhatsApp.',
+      title: 'Aromaz Perfum Shop · Perfumes importados en Argentina | Envíos a todo el país',
+      description: 'Comprá perfumes importados en Argentina: más de 220 fragancias de Extracto Importado en stock. Envío gratis +$50.000, 10% OFF por transferencia y 3 cuotas sin interés.',
+      keywords: 'comprar perfumes argentina, perfumes importados, fragancias mujer hombre, extracto importado, perfumería online',
+      image: 'images/og/default.png',
       path: '/'
     });
 

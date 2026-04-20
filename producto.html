@@ -3,8 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title data-title>Producto — Aromaz Perfum Shop</title>
-  <meta name="description" data-description content="Perfume importado de alta calidad. Envíos a todo el país.">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta name="author" content="Aromaz Perfum Shop">
+  <meta name="theme-color" content="#0a0a0a">
+  <title data-title>Perfume importado · Aromaz Perfum Shop</title>
+  <meta name="description" data-description content="Perfume importado de alta calidad. Envío gratis +$50.000, 10% OFF por transferencia y 3 cuotas sin interés.">
+
+  <meta property="og:type" content="product">
+  <meta property="og:site_name" content="Aromaz Perfum Shop">
+  <meta property="og:locale" content="es_AR">
+  <meta property="og:title" data-og-title content="Perfume importado · Aromaz Perfum Shop">
+  <meta property="og:description" data-og-desc content="Perfume importado de alta calidad. Envío gratis +$50K.">
+  <meta property="og:image" data-og-image content="https://aromazperfumshop.netlify.app/images/og/default.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" data-tw-title content="Perfume importado · Aromaz Perfum Shop">
+  <meta name="twitter:description" data-tw-desc content="Perfume importado de alta calidad.">
+  <meta name="twitter:image" data-tw-image content="https://aromazperfumshop.netlify.app/images/og/default.png">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -76,38 +92,74 @@
         return;
       }
 
-      // Meta + title
-      const titleStr = `${p.nombre}${p.equivalencia ? ' — Inspirada en ' + p.equivalencia : ''} | Aromaz Perfum Shop`;
-      document.querySelector('[data-title]').textContent = titleStr;
+      const titleStr = `${p.nombre}${p.equivalencia ? ' · Inspirada en ' + p.equivalencia : ''} · Perfume importado | Aromaz`;
+      const generoLabel = p.genero === 'femenino' ? 'para mujer' : p.genero === 'masculino' ? 'para hombre' : 'unisex';
+      const descStr = `Comprá ${p.nombre} ${generoLabel}${p.equivalencia ? ' (inspirada en ' + p.equivalencia + ')' : ''}. Desde ${AROMAZ.formatMoney(p.precioDesde)}. Envío gratis +$50K, 10% OFF por transferencia.`;
+      const absImg = p.imagenPrincipal ? `https://${AROMAZ.domain}/${p.imagenPrincipal.replace(/^\//, '')}` : `https://${AROMAZ.domain}/images/og/default.png`;
+      const pageUrl = `https://${AROMAZ.domain}/producto.html?p=${p.slug}`;
+
       document.title = titleStr;
-      document.querySelector('[data-description]').setAttribute('content', `${p.nombre}, fragancia ${p.genero}${p.equivalencia ? ' inspirada en ' + p.equivalencia : ''}. Desde ${AROMAZ.formatMoney(p.precioDesde)}. Envíos a todo el país.`);
+      const setMeta = (sel, attr, val) => { const el = document.querySelector(sel); if (el) el.setAttribute(attr, val); };
+      setMeta('[data-title]', 'content', titleStr);
+      document.querySelector('[data-title]').textContent = titleStr;
+      setMeta('[data-description]', 'content', descStr);
+      setMeta('[data-og-title]', 'content', titleStr);
+      setMeta('[data-og-desc]', 'content', descStr);
+      setMeta('[data-og-image]', 'content', absImg);
+      setMeta('[data-tw-title]', 'content', titleStr);
+      setMeta('[data-tw-desc]', 'content', descStr);
+      setMeta('[data-tw-image]', 'content', absImg);
+
+      // og:url y canonical dinámicos
+      let canonical = document.head.querySelector('link[rel="canonical"]');
+      if (!canonical) { canonical = document.createElement('link'); canonical.rel = 'canonical'; document.head.appendChild(canonical); }
+      canonical.href = pageUrl;
+      let ogUrl = document.head.querySelector('meta[property="og:url"]');
+      if (!ogUrl) { ogUrl = document.createElement('meta'); ogUrl.setAttribute('property', 'og:url'); document.head.appendChild(ogUrl); }
+      ogUrl.setAttribute('content', pageUrl);
 
       // Breadcrumb
       document.querySelector('[data-breadcrumb-cat]').textContent = p.nombre;
 
-      // Schema.org
-      const schema = {
+      const schemaProduct = {
         "@context": "https://schema.org",
         "@type": "Product",
+        "@id": pageUrl + '#product',
+        "url": pageUrl,
         "name": p.nombre + (p.equivalencia ? ' - Inspirada en ' + p.equivalencia : ''),
-        "image": p.imagenes.map(i => `https://${AROMAZ.domain}/${i}`),
+        "image": p.imagenes.map(i => `https://${AROMAZ.domain}/${i.replace(/^\//, '')}`),
         "description": p.descripcion,
         "sku": p.sku,
+        "mpn": p.sku,
         "brand": { "@type": "Brand", "name": "Extracto Importado" },
+        "category": p.genero === 'femenino' ? 'Perfume para mujer' : p.genero === 'masculino' ? 'Perfume para hombre' : 'Perfume unisex',
         "offers": {
           "@type": "AggregateOffer",
           "priceCurrency": "ARS",
           "lowPrice": p.precioDesde,
           "highPrice": p.precioHasta,
+          "offerCount": p.presentaciones?.length || 1,
           "availability": p.stockTotal > 0 ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
-          "seller": { "@type": "Organization", "name": "Aromaz Perfum Shop" }
+          "url": pageUrl,
+          "seller": { "@type": "Organization", "name": "Aromaz Perfum Shop", "url": `https://${AROMAZ.domain}` }
         },
-        "aggregateRating": { "@type": "AggregateRating", "ratingValue": p.rating, "reviewCount": p.reviewsCount }
+        "aggregateRating": { "@type": "AggregateRating", "ratingValue": p.rating, "reviewCount": p.reviewsCount, "bestRating": 5, "worstRating": 1 }
       };
-      const script = document.createElement('script');
-      script.type = 'application/ld+json';
-      script.textContent = JSON.stringify(schema);
-      document.head.appendChild(script);
+      const schemaBreadcrumb = {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Inicio", "item": `https://${AROMAZ.domain}/` },
+          { "@type": "ListItem", "position": 2, "name": "Catálogo", "item": `https://${AROMAZ.domain}/catalogo` },
+          { "@type": "ListItem", "position": 3, "name": p.nombre, "item": pageUrl }
+        ]
+      };
+      for (const schema of [schemaProduct, schemaBreadcrumb]) {
+        const script = document.createElement('script');
+        script.type = 'application/ld+json';
+        script.textContent = JSON.stringify(schema);
+        document.head.appendChild(script);
+      }
 
       const presentaciones = p.presentaciones;
       const firstDisponible = presentaciones.findIndex(v => v.disponible);

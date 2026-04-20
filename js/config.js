@@ -3,7 +3,7 @@
    ========================================================= */
 window.AROMAZ = {
   brand: 'Aromaz Perfum Shop',
-  domain: 'aromazperfumshop.com.ar',
+  domain: 'aromazperfumshop.netlify.app',
   whatsapp: '5491166967597',
   instagram: 'aromazperfumshop',
   instagramUrl: 'https://www.instagram.com/aromazperfumshop/',

@@ -218,29 +218,44 @@
 
   function setMetaTags(options = {}) {
     const {
-      title = 'Aromaz Perfum Shop',
-      description = 'Más de 220 fragancias importadas en Argentina',
-      path = ''
+      title = 'Aromaz Perfum Shop — Perfumes importados en Argentina',
+      description = 'Más de 220 fragancias importadas en Argentina. Envío gratis +$50K. 10% OFF por transferencia.',
+      path = '',
+      type = 'website',
+      keywords
     } = options;
 
     const url = `https://${AROMAZ.domain}${path}`;
     document.title = title;
 
-    const ogImage = options.image || `https://${AROMAZ.domain}/images/logo/aromaz-instagram.jpg`;
+    // Si image es absoluta, se usa tal cual; si es relativa, se prefija con el dominio.
+    let ogImage = options.image || `https://${AROMAZ.domain}/images/og/default.png`;
+    if (ogImage && !/^https?:\/\//i.test(ogImage)) {
+      ogImage = `https://${AROMAZ.domain}/${ogImage.replace(/^\//, '')}`;
+    }
+
     const tags = [
       { name: 'description', content: description },
+      { name: 'robots', content: 'index, follow, max-image-preview:large' },
+      { name: 'author', content: 'Aromaz Perfum Shop' },
+      { name: 'theme-color', content: '#0a0a0a' },
       { property: 'og:title', content: title },
       { property: 'og:description', content: description },
       { property: 'og:url', content: url },
-      { property: 'og:type', content: 'website' },
+      { property: 'og:type', content: type },
       { property: 'og:locale', content: 'es_AR' },
       { property: 'og:image', content: ogImage },
+      { property: 'og:image:width', content: '1200' },
+      { property: 'og:image:height', content: '630' },
+      { property: 'og:image:alt', content: title },
       { property: 'og:site_name', content: 'Aromaz Perfum Shop' },
       { name: 'twitter:card', content: 'summary_large_image' },
       { name: 'twitter:title', content: title },
       { name: 'twitter:description', content: description },
-      { name: 'twitter:image', content: ogImage }
+      { name: 'twitter:image', content: ogImage },
+      { name: 'twitter:image:alt', content: title }
     ];
+    if (keywords) tags.push({ name: 'keywords', content: keywords });
     for (const t of tags) {
       const key = t.name ? `name="${t.name}"` : `property="${t.property}"`;
       let el = document.head.querySelector(`meta[${key}]`);
@@ -311,7 +326,7 @@
   }
 
   AROMAZ.layout = {
-    render({ activeNav = '', title, description, path, image } = {}) {
+    render({ activeNav = '', title, description, path, image, keywords, type } = {}) {
       ensurePromosStylesheet();
 
       const layoutRoot = document.getElementById('layout-header');
@@ -319,7 +334,7 @@
       const footRoot = document.getElementById('layout-footer');
       if (footRoot) footRoot.outerHTML = buildFooter() + buildWhatsAppFloat() + buildExitIntent();
 
-      if (title || description) setMetaTags({ title, description, path, image });
+      if (title || description) setMetaTags({ title, description, path, image, keywords, type });
 
       injectGA4();
 

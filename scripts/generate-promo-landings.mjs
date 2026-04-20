@@ -5,60 +5,71 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 
+const DOMAIN = 'https://aromazperfumshop.netlify.app';
+
 const promos = [
   {
-    id: 'generica', slug: 'promo-generica.html',
-    title: 'Llevá 2, pagá 15% menos — Aromaz Perfum Shop',
-    description: 'Promo permanente: 15% de descuento en tu carrito llevando 2 fragancias cualesquiera. Código AROMAZ15.',
-    code: 'AROMAZ15'
+    id: 'generica', slug: 'promo-generica.html', imageKey: 'generica',
+    title: 'Llevá 2, pagá 15% menos | Promo perfumes Aromaz',
+    description: '15% OFF llevando 2 fragancias importadas cualesquiera. Envíos a todo el país. Código AROMAZ15. Válida todo el año.',
+    code: 'AROMAZ15',
+    keywords: 'promo perfumes, descuento perfumes argentina, 2x1 perfumes, 15% off fragancias, comprar perfumes importados'
   },
   {
-    id: 'padre', slug: 'promo-dia-del-padre.html',
-    title: 'Día del Padre — 20% OFF en 2 perfumes | Aromaz',
-    description: 'Regalale a papá una fragancia de 10. 20% OFF llevando 2 perfumes masculinos o unisex. Código PAPA2026.',
-    code: 'PAPA2026'
+    id: 'padre', slug: 'promo-dia-del-padre.html', imageKey: 'dia-del-padre',
+    title: 'Día del Padre · 20% OFF en 2 perfumes | Aromaz',
+    description: 'Regalo para papá: 20% OFF llevando 2 fragancias masculinas o unisex + envío gratis en CABA/GBA. Código PAPA2026.',
+    code: 'PAPA2026',
+    keywords: 'regalo día del padre, perfumes para papá, regalo día del padre argentina, fragancias masculinas'
   },
   {
-    id: 'madre', slug: 'promo-dia-de-la-madre.html',
-    title: 'Día de la Madre — 20% OFF + envoltorio | Aromaz',
-    description: 'Para la mujer más importante. 20% OFF llevando 2 perfumes femeninos o unisex + envoltorio premium sin cargo. Código MAMA2026.',
-    code: 'MAMA2026'
+    id: 'madre', slug: 'promo-dia-de-la-madre.html', imageKey: 'dia-de-la-madre',
+    title: 'Día de la Madre · 20% OFF + envoltorio regalo | Aromaz',
+    description: 'Perfumes para regalar a mamá: 20% OFF llevando 2 fragancias femeninas + envoltorio premium sin cargo. Código MAMA2026.',
+    code: 'MAMA2026',
+    keywords: 'regalo día de la madre, perfumes para mamá, regalo para madres argentina, fragancias femeninas'
   },
   {
-    id: 'cyber-monday', slug: 'promo-cyber-monday.html',
-    title: 'Cyber Monday — 25% OFF en toda la tienda | Aromaz',
-    description: '72 horas de precios únicos: 25% OFF en todo el catálogo Aromaz. Código CYBER2026.',
-    code: 'CYBER2026'
+    id: 'cyber-monday', slug: 'promo-cyber-monday.html', imageKey: 'cyber-monday',
+    title: 'Cyber Monday AR · 25% OFF en perfumes importados | Aromaz',
+    description: 'Cyber Monday en Aromaz: 25% OFF en todo el catálogo de perfumes. 72 horas de precios únicos. Código CYBER2026.',
+    code: 'CYBER2026',
+    keywords: 'cyber monday perfumes, cyber monday argentina, ofertas cyber monday perfumería'
   },
   {
-    id: 'black-friday', slug: 'promo-black-friday.html',
-    title: 'Black Friday — 20% OFF + envío gratis | Aromaz',
-    description: 'Black Friday en Aromaz: 20% OFF en todo el catálogo + envío gratis a todo el país. Código BLACK2026.',
-    code: 'BLACK2026'
+    id: 'black-friday', slug: 'promo-black-friday.html', imageKey: 'black-friday',
+    title: 'Black Friday · 20% OFF + envío gratis en perfumes | Aromaz',
+    description: 'Black Friday Aromaz: 20% OFF en todo el catálogo de perfumes importados + envío gratis a todo el país. Código BLACK2026.',
+    code: 'BLACK2026',
+    keywords: 'black friday perfumes, black friday argentina, descuentos black friday perfumería'
   },
   {
-    id: 'navidad', slug: 'promo-navidad.html',
-    title: 'Navidad — Gift Box + 15% OFF | Aromaz',
-    description: 'Regalos que se recuerdan. 15% OFF llevando 2 perfumes + Gift Box navideño sin cargo. Código NAVIDAD2026.',
-    code: 'NAVIDAD2026'
+    id: 'navidad', slug: 'promo-navidad.html', imageKey: 'navidad',
+    title: 'Navidad · Gift Box + 15% OFF en perfumes | Aromaz',
+    description: 'Regalos de Navidad con aroma: 15% OFF llevando 2 perfumes + Gift Box navideño premium sin cargo. Código NAVIDAD2026.',
+    code: 'NAVIDAD2026',
+    keywords: 'regalo de navidad, regalos navideños, perfumes para regalar navidad, gift box navideño'
   },
   {
-    id: 'reyes', slug: 'promo-reyes.html',
-    title: 'Reyes — 10% OFF + envío gratis | Aromaz',
-    description: 'El último regalo de la temporada. 10% OFF + envío gratis para llegar el 5 de enero. Código REYES2027.',
-    code: 'REYES2027'
+    id: 'reyes', slug: 'promo-reyes.html', imageKey: 'reyes',
+    title: 'Noche de Reyes · 10% OFF + envío gratis en perfumes | Aromaz',
+    description: 'El último regalo: 10% OFF + envío gratis para el Día de Reyes. Entregas programadas para que llegue la noche del 5. Código REYES2027.',
+    code: 'REYES2027',
+    keywords: 'regalo día de reyes, perfumes reyes magos, regalo reyes argentina'
   },
   {
-    id: 'cumpleanos', slug: 'promo-cumpleanos.html',
-    title: 'Cumpleaños — 15% OFF + tarjeta escrita a mano | Aromaz',
-    description: 'Para quedar bien en cualquier festejo. 15% OFF llevando 2 perfumes + tarjeta personalizada. Código CUMPLE15.',
-    code: 'CUMPLE15'
+    id: 'cumpleanos', slug: 'promo-cumpleanos.html', imageKey: 'cumpleanos',
+    title: 'Regalo de cumpleaños · 15% OFF + tarjeta personalizada | Aromaz',
+    description: 'Perfume de regalo para cumpleaños: 15% OFF llevando 2 fragancias + tarjeta escrita a mano. Código CUMPLE15.',
+    code: 'CUMPLE15',
+    keywords: 'regalo de cumpleaños, perfumes para regalar, idea de regalo cumpleaños argentina'
   },
   {
-    id: 'pareja', slug: 'promo-pareja.html',
-    title: 'Regalo para tu pareja — Pack él + ella 20% OFF | Aromaz',
-    description: 'La combinación perfecta. 20% OFF llevando un perfume para él y uno para ella (o unisex). Código PAREJA20.',
-    code: 'PAREJA20'
+    id: 'pareja', slug: 'promo-pareja.html', imageKey: 'pareja',
+    title: 'Pack Pareja · 20% OFF · él + ella | Aromaz',
+    description: 'Perfumes para regalar en pareja: 20% OFF llevando uno para él y otro para ella (o dos unisex). Ideal para aniversarios. Código PAREJA20.',
+    code: 'PAREJA20',
+    keywords: 'regalo para pareja, regalo aniversario, perfumes pareja, regalo san valentín'
   }
 ];
 
@@ -83,13 +94,35 @@ const SCRIPTS_COMMON = `
   <script src="js/main.js"></script>`;
 
 function buildLanding(p) {
+  const ogImage = `${DOMAIN}/images/og/promo-${p.imageKey}.png`;
+  const url = `${DOMAIN}/${p.slug.replace('.html', '')}`;
   return `<!DOCTYPE html>
 <html lang="es-AR">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta name="author" content="Aromaz Perfum Shop">
+  <meta name="theme-color" content="#0a0a0a">
   <title>${p.title}</title>
   <meta name="description" content="${p.description}">
+  <meta name="keywords" content="${p.keywords}">
+
+  <link rel="canonical" href="${url}">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Aromaz Perfum Shop">
+  <meta property="og:locale" content="es_AR">
+  <meta property="og:title" content="${p.title}">
+  <meta property="og:description" content="${p.description}">
+  <meta property="og:url" content="${url}">
+  <meta property="og:image" content="${ogImage}">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="${p.title}">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="${p.title}">
+  <meta name="twitter:description" content="${p.description}">
+  <meta name="twitter:image" content="${ogImage}">
 ${HEAD_COMMON}
 </head>
 <body>
@@ -107,6 +140,8 @@ ${SCRIPTS_COMMON}
       activeNav: '',
       title: ${JSON.stringify(p.title)},
       description: ${JSON.stringify(p.description)},
+      keywords: ${JSON.stringify(p.keywords)},
+      image: ${JSON.stringify(ogImage)},
       path: '/${p.slug.replace('.html', '')}'
     });
     AROMAZ.promos.render('${p.id}');
@@ -117,13 +152,37 @@ ${SCRIPTS_COMMON}
 }
 
 function buildIndex() {
+  const title = 'Promociones y descuentos en perfumes | Aromaz Perfum Shop';
+  const description = 'Todas las promos vigentes de Aromaz: 15% OFF llevando 2 fragancias, Día del Padre, Día de la Madre, Cyber Monday, Black Friday, Navidad, Reyes y regalos para pareja.';
+  const keywords = 'promociones perfumes, descuentos perfumes argentina, ofertas fragancias, cupones perfumes, promos perfumería';
+  const ogImage = `${DOMAIN}/images/og/promos.png`;
+  const url = `${DOMAIN}/promos`;
   return `<!DOCTYPE html>
 <html lang="es-AR">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Promociones y descuentos — Aromaz Perfum Shop</title>
-  <meta name="description" content="Todas las promos de Aromaz Perfum Shop: 15% OFF llevando 2, Día del Padre, Día de la Madre, Cyber Monday, Black Friday, Navidad, Reyes, cumpleaños y regalos de pareja.">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta name="author" content="Aromaz Perfum Shop">
+  <meta name="theme-color" content="#0a0a0a">
+  <title>${title}</title>
+  <meta name="description" content="${description}">
+  <meta name="keywords" content="${keywords}">
+
+  <link rel="canonical" href="${url}">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Aromaz Perfum Shop">
+  <meta property="og:locale" content="es_AR">
+  <meta property="og:title" content="${title}">
+  <meta property="og:description" content="${description}">
+  <meta property="og:url" content="${url}">
+  <meta property="og:image" content="${ogImage}">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="${title}">
+  <meta name="twitter:description" content="${description}">
+  <meta name="twitter:image" content="${ogImage}">
 ${HEAD_COMMON}
 </head>
 <body>
@@ -163,8 +222,10 @@ ${SCRIPTS_COMMON}
   <script>
     AROMAZ.layout.render({
       activeNav: '',
-      title: 'Promociones y descuentos — Aromaz Perfum Shop',
-      description: 'Todas las promos de Aromaz: descuentos por temporada, Día del Padre, Madre, Cyber Monday, Black Friday, Navidad, Reyes y más.',
+      title: ${JSON.stringify(title)},
+      description: ${JSON.stringify(description)},
+      keywords: ${JSON.stringify(keywords)},
+      image: ${JSON.stringify(ogImage)},
       path: '/promos'
     });
 

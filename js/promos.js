@@ -178,6 +178,17 @@ AROMAZ.promos = {
     return this.list.find(p => p.id === id);
   },
 
+  /** Key usada para nombres de archivo de imagen (post/story/OG). */
+  imageKey(p) {
+    return (p.slug || '').replace(/^promo-/, '').replace(/\.html$/, '');
+  },
+
+  /** Ruta absoluta a la imagen OG (1200x630) de la promo. */
+  ogImage(p) {
+    const key = this.imageKey(p);
+    return `https://${AROMAZ.domain}/images/og/promo-${key}.png`;
+  },
+
   /** Devuelve la promo activa más cercana a su fecha pico (o null) */
   activeCampaign() {
     const now = new Date();

@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guía rápida — Cómo usar tu sitio Aromaz</title>
+  <meta name="description" content="Manual del dueño: cómo está hecho tu sitio, sus secciones, las landings de promo y cómo difundirlas en Instagram y WhatsApp.">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="css/promos.css">
+  <link rel="icon" type="image/jpeg" href="images/logo/aromaz-instagram.jpg">
+
+  <style>
+    .manual-hero {
+      background: linear-gradient(135deg, #0a0a0a 0%, #1d2a38 100%);
+      color: var(--c-white);
+      padding: var(--sp-10) 0 var(--sp-9);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .manual-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(circle at 50% 40%, rgba(201,163,90,0.15), transparent 55%);
+      pointer-events: none;
+    }
+    .manual-hero .eyebrow { color: var(--c-gold); position: relative; }
+    .manual-hero h1 { color: var(--c-white); font-size: clamp(2.2rem, 5vw, 3.5rem); position: relative; }
+    .manual-hero p { color: rgba(255,255,255,0.8); font-size: var(--fs-lg); max-width: 720px; margin: var(--sp-4) auto 0; position: relative; }
+
+    .toc {
+      background: var(--c-cream-dark);
+      padding: var(--sp-5) var(--sp-6);
+      border-radius: var(--radius-lg);
+      margin: var(--sp-7) 0;
+    }
+    .toc h3 { font-family: var(--ff-sans); font-size: var(--fs-sm); letter-spacing: 0.2em; text-transform: uppercase; color: var(--c-gray-600); margin-bottom: var(--sp-4); }
+    .toc ol { columns: 2; column-gap: var(--sp-6); padding-left: var(--sp-5); }
+    .toc ol li { margin-bottom: var(--sp-2); break-inside: avoid; }
+    .toc a { color: var(--c-black); text-decoration: none; border-bottom: 1px dotted var(--c-gold); }
+    .toc a:hover { color: var(--c-gold); }
+
+    .callout {
+      padding: var(--sp-5) var(--sp-6);
+      border-radius: var(--radius-md);
+      border-left: 4px solid var(--c-gold);
+      background: rgba(201,163,90,0.08);
+      margin: var(--sp-5) 0;
+    }
+    .callout.warn { border-left-color: #e07b2a; background: rgba(224,123,42,0.08); }
+    .callout.info { border-left-color: #3b82f6; background: rgba(59,130,246,0.08); }
+    .callout strong { color: var(--c-black); }
+    .callout i { margin-right: 6px; }
+
+    .step-list {
+      counter-reset: guide;
+      list-style: none;
+      padding: 0;
+      display: grid;
+      gap: var(--sp-4);
+    }
+    .step-list li {
+      counter-increment: guide;
+      padding: var(--sp-4) var(--sp-5) var(--sp-4) var(--sp-7);
+      background: var(--c-white);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+      position: relative;
+    }
+    .step-list li::before {
+      content: counter(guide);
+      position: absolute;
+      left: var(--sp-4); top: var(--sp-4);
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      background: var(--c-gold);
+      color: var(--c-white);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700;
+    }
+
+    .grid-pages {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: var(--sp-4);
+      margin-top: var(--sp-5);
+    }
+    .page-card {
+      padding: var(--sp-4) var(--sp-5);
+      background: var(--c-white);
+      border: 1px solid var(--c-gray-100);
+      border-radius: var(--radius-md);
+      text-decoration: none;
+      color: inherit;
+      transition: all var(--t-base);
+    }
+    .page-card:hover { border-color: var(--c-gold); transform: translateY(-2px); box-shadow: var(--shadow-md); }
+    .page-card .icon { width: 40px; height: 40px; border-radius: 50%; background: rgba(201,163,90,0.15); color: var(--c-gold); display: inline-flex; align-items: center; justify-content: center; margin-bottom: var(--sp-2); }
+    .page-card h4 { margin-bottom: 4px; color: var(--c-black); font-size: var(--fs-base); }
+    .page-card p { color: var(--c-gray-600); font-size: var(--fs-sm); line-height: 1.5; }
+    .page-card code { font-size: 12px; color: var(--c-gold); display: block; margin-top: 6px; }
+
+    .promo-kit {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--sp-5);
+      padding: var(--sp-5);
+      background: var(--c-white);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--c-gray-100);
+      margin-bottom: var(--sp-5);
+    }
+    .promo-kit .visual {
+      background: var(--c-cream-dark);
+      border-radius: var(--radius-md);
+      padding: var(--sp-3);
+      display: flex;
+      flex-direction: column;
+      gap: var(--sp-3);
+    }
+    .asset-row {
+      display: grid;
+      grid-template-columns: 1fr 0.62fr;
+      gap: var(--sp-3);
+      align-items: start;
+    }
+    .asset-card {
+      background: var(--c-white);
+      border: 1px solid var(--c-gray-100);
+      border-radius: var(--radius-sm);
+      padding: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .asset-card .tag {
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--c-gray-600);
+      font-weight: 700;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .asset-card .tag span:last-child { color: var(--c-gold); font-size: 9px; }
+    .asset-card img {
+      width: 100%;
+      height: auto;
+      border-radius: 4px;
+      box-shadow: var(--shadow-md);
+      display: block;
+    }
+    .asset-card .download-row {
+      display: flex;
+      gap: 6px;
+    }
+    .asset-card .download-row a {
+      flex: 1;
+      text-align: center;
+      font-size: 10px;
+      padding: 6px 4px;
+    }
+    .promo-kit .info h3 { margin-bottom: var(--sp-2); }
+    .promo-kit .info h3 em { color: var(--c-gold); font-style: italic; }
+    .promo-kit .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--sp-3);
+      margin: var(--sp-3) 0;
+      font-size: var(--fs-sm);
+    }
+    .promo-kit .meta > span {
+      background: var(--c-cream-dark);
+      padding: 4px 10px;
+      border-radius: var(--radius-full);
+    }
+    .promo-kit .meta strong { color: var(--c-gold); }
+    .promo-kit .block-label {
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--c-gray-600);
+      margin-bottom: 4px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .promo-kit .copyable {
+      position: relative;
+      background: var(--c-cream-dark);
+      border: 1px solid var(--c-gray-100);
+      border-radius: var(--radius-sm);
+      padding: var(--sp-3);
+      font-size: var(--fs-sm);
+      line-height: 1.6;
+      margin-bottom: var(--sp-3);
+      white-space: pre-wrap;
+      word-break: break-word;
+      font-family: var(--ff-sans);
+      color: var(--c-gray-900);
+    }
+    .promo-kit .copy-btn {
+      background: var(--c-white);
+      border: 1px solid var(--c-gray-200);
+      border-radius: var(--radius-sm);
+      padding: 3px 10px;
+      font-size: 10px;
+      cursor: pointer;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      color: var(--c-gray-700);
+      text-transform: uppercase;
+    }
+    .promo-kit .copy-btn:hover { background: var(--c-gold); color: var(--c-white); border-color: var(--c-gold); }
+    .promo-kit .copy-btn.copied { background: #22c55e; color: #fff; border-color: #22c55e; }
+
+    @media (max-width: 768px) {
+      .promo-kit { grid-template-columns: 1fr; }
+      .toc ol { columns: 1; }
+    }
+
+    .dos-donts {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--sp-5);
+      margin: var(--sp-5) 0;
+    }
+    .dos-donts > div {
+      padding: var(--sp-5);
+      border-radius: var(--radius-md);
+    }
+    .dos-donts .do { background: rgba(34,197,94,0.08); border-left: 4px solid #22c55e; }
+    .dos-donts .dont { background: rgba(239,68,68,0.08); border-left: 4px solid #ef4444; }
+    .dos-donts h4 { margin-bottom: var(--sp-3); }
+    .dos-donts ul { padding-left: var(--sp-5); font-size: var(--fs-sm); line-height: 1.8; }
+    @media (max-width: 768px) { .dos-donts { grid-template-columns: 1fr; } }
+
+    .section-manual { padding: var(--sp-8) 0; }
+    .section-manual h2 { margin-bottom: var(--sp-3); }
+    .section-manual > .container-narrow > p { color: var(--c-gray-700); line-height: 1.8; }
+  </style>
+</head>
+<body>
+
+  <!-- ===== HERO ===== -->
+  <section class="manual-hero">
+    <div class="container">
+      <span class="eyebrow">Guía rápida para el dueño</span>
+      <h1>Cómo <em style="color:#c9a35a;">funciona</em> tu sitio</h1>
+      <p>Una guía simple, sin tecnicismos. Leela una vez y vas a saber dónde está todo, cómo usar las landings de promo y cómo difundirlas en Instagram y WhatsApp.</p>
+    </div>
+  </section>
+
+  <main class="section-manual">
+    <div class="container-narrow">
+
+      <!-- ===== ÍNDICE ===== -->
+      <div class="toc">
+        <h3><i class="fas fa-list"></i> En esta guía</h3>
+        <ol>
+          <li><a href="#que-es">¿Qué es este sitio, en 1 minuto?</a></li>
+          <li><a href="#secciones">Las secciones del sitio</a></li>
+          <li><a href="#landings">Las 9 landings de promos</a></li>
+          <li><a href="#banner">El banner automático en home</a></li>
+          <li><a href="#ig-wa">Cómo publicar en Instagram y WhatsApp</a></li>
+          <li><a href="#kit">Kit listo para cada promo (imagen + texto)</a></li>
+          <li><a href="#actualizar">Cómo pedir cambios o actualizaciones</a></li>
+          <li><a href="#tips">Consejos rápidos</a></li>
+        </ol>
+      </div>
+
+      <!-- ===== 1. QUÉ ES ===== -->
+      <section id="que-es" style="margin-bottom: var(--sp-9);">
+        <h2>1. ¿Qué es este sitio, <em>en 1 minuto</em>?</h2>
+        <p>Tu tienda Aromaz es una <strong>página web estática</strong> — pensala como un folleto digital muy lindo que está siempre online. Los clientes ven el catálogo, arman su carrito, y el pedido te llega por WhatsApp. Vos atendés, confirmás stock, cobrás y despachás como ya venís haciendo.</p>
+
+        <div class="callout info">
+          <strong><i class="fas fa-circle-info"></i> En números:</strong>
+          <ul style="margin-top: var(--sp-2); padding-left: var(--sp-5); line-height: 1.8;">
+            <li><strong>222</strong> perfumes cargados en el catálogo (tomados de Extracto Importado).</li>
+            <li><strong>22</strong> páginas + <strong>9 landings de promo</strong> + un índice de promos.</li>
+            <li><strong>0 costos fijos</strong> de mantenimiento: el hosting en Netlify es gratis para tu tráfico.</li>
+            <li>El carrito y los favoritos se guardan en el celular/navegador del cliente, no necesitás gestionar nada.</li>
+          </ul>
+        </div>
+
+        <div class="callout">
+          <strong><i class="fas fa-map-pin"></i> Tu dominio actual:</strong><br>
+          <a href="https://aromazperfumshop.netlify.app/" target="_blank" rel="noopener" style="color: var(--c-gold); font-family: var(--ff-serif); font-size: var(--fs-lg);">aromazperfumshop.netlify.app</a><br>
+          <small>Cuando compres un dominio propio (ej. <em>aromazperfumshop.com.ar</em>), se enchufa a Netlify y listo, queda redirigido sin que pierdas nada.</small>
+        </div>
+      </section>
+
+      <!-- ===== 2. SECCIONES ===== -->
+      <section id="secciones" style="margin-bottom: var(--sp-9);">
+        <h2>2. Las secciones del sitio</h2>
+        <p>Todas las páginas comparten el mismo <strong>header</strong> (menú arriba) y <strong>footer</strong> (pie de página). Desde cualquier pantalla el cliente llega al carrito y al WhatsApp en un clic.</p>
+
+        <div class="grid-pages">
+          <a href="index.html" target="_blank" class="page-card">
+            <div class="icon"><i class="fas fa-house"></i></div>
+            <h4>Home</h4>
+            <p>Hero, categorías, destacados, B2B, FAQ rápido y CTA de Instagram.</p>
+            <code>/</code>
+          </a>
+          <a href="catalogo.html" target="_blank" class="page-card">
+            <div class="icon"><i class="fas fa-store"></i></div>
+            <h4>Catálogo</h4>
+            <p>222 perfumes con filtros por género, familia olfativa, precio y más.</p>
+            <code>/catalogo.html</code>
+          </a>
+          <a href="producto.html?p=extracto-n68-creed-aventus-ex-068" target="_blank" class="page-card">
+            <div class="icon"><i class="fas fa-spray-can-sparkles"></i></div>
+            <h4>Producto</h4>
+            <p>Ficha con fotos, notas, equivalencia, presentaciones y botón al carrito.</p>
+            <code>/producto.html?p=<em>slug</em></code>
+          </a>
+          <a href="carrito.html" target="_blank" class="page-card">
+            <div class="icon"><i class="fas fa-cart-shopping"></i></div>
+            <h4>Carrito</h4>
+            <p>Lista de productos, cupón, código postal y botón de checkout por WhatsApp.</p>
+            <code>/carrito.html</code>
+          </a>
+          <a href="favoritos.html" target="_blank" class="page-card">
+            <div class="icon"><i class="fas fa-heart"></i></div>
+            <h4>Favoritos</h4>
+            <p>Wishlist privada del cliente para volver después a comprar.</p>
+            <code>/favoritos.html</code>
+          </a>
+          <a href="nosotros.html" target="_blank" class="page-card">
+            <div class="icon"><i class="fas fa-users"></i></div>
+            <h4>Nosotros</h4>
+            <p>Tu historia, qué te diferencia y por qué te eligen.</p>
+            <code>/nosotros.html</code>
+          </a>
+          <a href="empresas.html" target="_blank" class="page-card">
+            <div class="icon"><i class="fas fa-briefcase"></i></div>
+            <h4>Empresas & Eventos</h4>
+            <p>Landing B2B para regalos corporativos, bodas, 15 años, amenities.</p>
+            <code>/empresas.html</code>
+          </a>
+          <a href="revende.html" target="_blank" class="page-card">
+            <div class="icon"><i class="fas fa-handshake"></i></div>
+            <h4>Revende</h4>
+            <p>Landing para sumar revendedores con testimonios reales.</p>
+            <code>/revende.html</code>
+          </a>
+          <a href="faq.html" target="_blank" class="page-card">
+            <div class="icon"><i class="fas fa-circle-question"></i></div>
+            <h4>FAQ</h4>
+            <p>Preguntas frecuentes sobre duración, envíos, pagos, garantía.</p>
+            <code>/faq.html</code>
+          </a>
+          <a href="envios.html" target="_blank" class="page-card">
+            <div class="icon"><i class="fas fa-truck"></i></div>
+            <h4>Envíos</h4>
+            <p>Zonas, tiempos, costos y condiciones de envío gratis.</p>
+            <code>/envios.html</code>
+          </a>
+          <a href="contacto.html" target="_blank" class="page-card">
+            <div class="icon"><i class="fas fa-envelope"></i></div>
+            <h4>Contacto</h4>
+            <p>WhatsApp, Instagram y formulario de contacto rápido.</p>
+            <code>/contacto.html</code>
+          </a>
+          <a href="terminos.html" target="_blank" class="page-card">
+            <div class="icon"><i class="fas fa-file-contract"></i></div>
+            <h4>Términos</h4>
+            <p>Términos y condiciones, política de devoluciones y privacidad.</p>
+            <code>/terminos.html</code>
+          </a>
+          <a href="promos.html" target="_blank" class="page-card">
+            <div class="icon"><i class="fas fa-tags"></i></div>
+            <h4>Promos (índice)</h4>
+            <p>Listado de las 9 landings de promoción con sus códigos.</p>
+            <code>/promos.html</code>
+          </a>
+        </div>
+      </section>
+
+      <!-- ===== 3. LANDINGS ===== -->
+      <section id="landings" style="margin-bottom: var(--sp-9);">
+        <h2>3. Las 9 <em>landings de promos</em></h2>
+        <p>Una <strong>landing</strong> es una página especial con foco en una sola oferta. Tiene su propio diseño, código de descuento y selección de productos. Le mandás a alguien el link y ya sabe qué estás promocionando, sin distracciones.</p>
+
+        <div class="callout">
+          <strong><i class="fas fa-tags"></i> Todas las promos juntas:</strong>
+          <a href="promos.html" target="_blank" style="color: var(--c-gold);">aromazperfumshop.netlify.app/promos</a> — el índice con las 9 promos vigentes.
+        </div>
+
+        <p>Cuando un cliente entra a una landing y va al carrito, el código <strong>se precarga solo</strong> en el campo de cupón y se incluye automáticamente en el mensaje de WhatsApp que te llega. Vos lo ves y aplicás el descuento manualmente al total antes de cobrar.</p>
+
+        <div class="callout warn">
+          <strong><i class="fas fa-triangle-exclamation"></i> Importante:</strong> los descuentos en las landings <strong>no se aplican automáticamente en el precio mostrado</strong>. El cliente ve el precio normal del catálogo; vos aplicás el descuento cuando le pasás el total final por WhatsApp. Esto es intencional: te da flexibilidad para sumar envíos, ajustar por stock, etc.
+        </div>
+      </section>
+
+      <!-- ===== 4. BANNER ===== -->
+      <section id="banner" style="margin-bottom: var(--sp-9);">
+        <h2>4. El banner automático en home</h2>
+        <p>Algunas promos son de <strong>temporada</strong> (Día del Padre, Madre, Cyber Monday, Black Friday, Navidad, Reyes). Para esas, el sitio <strong>mueve un banner arriba de todo, con countdown en vivo</strong>, automáticamente:</p>
+
+        <ul style="padding-left: var(--sp-5); line-height: 1.9;">
+          <li>Aparece <strong>2 semanas antes</strong> del evento.</li>
+          <li>Sigue visible <strong>hasta 1 semana después</strong>.</li>
+          <li>El resto del año, no se ve nada.</li>
+          <li>Cuando entra dentro de la ventana, dice: "ej. <em>Black Friday — 20% OFF + envío gratis · 2d 14:23:05 · Ver promo →</em>".</li>
+          <li>El visitante puede cerrarlo (la X de la derecha) y no se muestra más en esa sesión.</li>
+        </ul>
+
+        <div class="callout info">
+          <strong><i class="fas fa-lightbulb"></i> ¿Por qué es importante?</strong><br>
+          Esto significa que <strong>no tenés que acordarte</strong> de publicar el banner antes de cada fecha: el sitio lo hace solo. Tu trabajo es solamente <strong>difundirlo en Instagram y WhatsApp</strong> durante esa ventana.
+        </div>
+
+        <p style="margin-top: var(--sp-4);"><strong>Fechas clave 2026:</strong></p>
+        <ul style="padding-left: var(--sp-5); line-height: 1.9;">
+          <li>🎩 <strong>Día del Padre</strong> — domingo <strong>21 de junio</strong> (banner visible del 7-jun al 28-jun).</li>
+          <li>💐 <strong>Día de la Madre</strong> — domingo <strong>18 de octubre</strong> (banner del 4-oct al 25-oct).</li>
+          <li>⚡ <strong>Cyber Monday AR (CACE)</strong> — primera semana de <strong>noviembre</strong> (banner del 20-oct al 9-nov).</li>
+          <li>🔥 <strong>Black Friday</strong> — viernes <strong>27 de noviembre</strong> (banner del 13-nov al 4-dic).</li>
+          <li>🎄 <strong>Navidad</strong> — viernes <strong>25 de diciembre</strong> (banner del 1-dic al 26-dic).</li>
+          <li>👑 <strong>Reyes</strong> — miércoles <strong>6 de enero de 2027</strong> (banner del 26-dic al 13-ene).</li>
+        </ul>
+
+        <p style="margin-top: var(--sp-4);">Las otras 3 promos (<em>Genérica</em>, <em>Cumpleaños</em>, <em>Pareja</em>) están disponibles <strong>todo el año</strong> pero <strong>no aparecen en el banner</strong> — las promocionás activamente vos cuando quieras.</p>
+      </section>
+
+      <!-- ===== 5. IG + WA ===== -->
+      <section id="ig-wa" style="margin-bottom: var(--sp-9);">
+        <h2>5. Cómo difundir las promos</h2>
+
+        <div class="callout info">
+          <strong><i class="fas fa-images"></i> Para cada promo te dejamos 3 imágenes listas:</strong>
+          <ul style="margin-top: var(--sp-2); padding-left: var(--sp-5); line-height: 1.8;">
+            <li><strong>Post cuadrado (1080×1080)</strong> — para el feed de Instagram y para compartir en WhatsApp como imagen normal.</li>
+            <li><strong>Story / Estado (1080×1920)</strong> — vertical, para historias de Instagram y Facebook, y <em>también para estado de WhatsApp</em>. Son las mismas medidas.</li>
+            <li><strong>OG compartible (1200×630)</strong> — no se descarga; es la que se ve <em>automáticamente</em> cuando alguien pega el link de una landing en WhatsApp, Instagram DM, Facebook, Twitter, etc. Aparece sola, no hay que hacer nada.</li>
+          </ul>
+        </div>
+
+        <h3 style="margin-top: var(--sp-5);"><i class="fab fa-instagram" style="color:#e1306c;"></i> En Instagram</h3>
+        <ol class="step-list" style="margin-top: var(--sp-4);">
+          <li>
+            <strong>Post del feed:</strong> descargá la <strong>imagen cuadrada (1080×1080)</strong> y subila como post normal. El caption ya te lo dejamos listo en la sección 6 — solo copiá y pegá.
+          </li>
+          <li>
+            <strong>Historia (Story):</strong> descargá la <strong>imagen vertical (1080×1920)</strong>, subila a tu historia y sumale el <strong>sticker de link</strong> apuntando a la landing (ej. <code>aromazperfumshop.netlify.app/promo-dia-del-padre</code>). Queda pantalla completa, muy profesional.
+          </li>
+          <li>
+            <strong>Link en bio:</strong> antes de cada fecha clave, cambiá el link de tu bio a la landing de la promo. Cuando termina la ventana, volvelo al <a href="index.html" target="_blank">home</a> o al <a href="catalogo.html" target="_blank">catálogo</a>.
+          </li>
+          <li>
+            <strong>Reels / DM:</strong> si hacés un reel o compartís la landing por mensaje directo, el link <strong>muestra solo la imagen OG</strong> con el título y el código — no necesitás adjuntar nada, el preview aparece automáticamente.
+          </li>
+        </ol>
+
+        <h3 style="margin-top: var(--sp-7);"><i class="fab fa-whatsapp" style="color:#25d366;"></i> En WhatsApp</h3>
+        <ol class="step-list" style="margin-top: var(--sp-4);">
+          <li>
+            <strong>Estado (status):</strong> descargá la <strong>imagen vertical (1080×1920)</strong> — es la misma que usás para Story. Agregale un texto corto tipo: <em>"Día del Padre ya está 👔 Link en bio o escribime"</em>.
+          </li>
+          <li>
+            <strong>Chats y listas de difusión:</strong> armá una lista con tus clientes recurrentes y mandales solo el <strong>link de la landing</strong>. Va a aparecer un preview lindo automáticamente (imagen + título + código). Podés sumar el mensaje tipo que dejamos listo en la sección 6.
+          </li>
+          <li>
+            <strong>Grupos y contactos VIP:</strong> combo que mejor convierte: <strong>imagen cuadrada (la del feed) + mensaje corto + link</strong>. Tres toques.
+          </li>
+          <li>
+            <strong>Respuestas rápidas:</strong> si alguien te consulta por "ofertas" o "descuentos", respondé con el link de <a href="promos.html" target="_blank">/promos</a> — ahí ve todas juntas, con su preview OG.
+          </li>
+        </ol>
+
+        <div class="dos-donts">
+          <div class="do">
+            <h4><i class="fas fa-check"></i> Qué sí hacer</h4>
+            <ul>
+              <li>Publicá 1-2 semanas <strong>antes</strong> del evento para crear expectativa.</li>
+              <li>Repetí el post con distintos enfoques (producto, regalo, testimonio).</li>
+              <li>Mostrá productos reales que entran en la promo, no solo el logo.</li>
+              <li>Usá siempre el <strong>mismo código</strong> que está en la landing.</li>
+            </ul>
+          </div>
+          <div class="dont">
+            <h4><i class="fas fa-xmark"></i> Qué evitar</h4>
+            <ul>
+              <li>Cambiar el código a mitad de campaña (confundís a los clientes).</li>
+              <li>Prometer un descuento mayor al que figura en la landing.</li>
+              <li>Publicar 2 promos distintas el mismo día (elegí una por vez).</li>
+              <li>Olvidarte de bajar el post cuando termina la campaña (quedan fechas vencidas visibles).</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== 6. KIT ===== -->
+      <section id="kit" style="margin-bottom: var(--sp-9);">
+        <h2>6. Kit listo <em>para cada promo</em></h2>
+        <p>Para cada landing te dejamos <strong>dos imágenes listas</strong> (post cuadrado + historia/estado vertical), el <strong>caption sugerido</strong> para Instagram, el <strong>mensaje de WhatsApp</strong> para mandarle a tus clientes, y el <strong>link completo</strong> a copiar.</p>
+        <p style="color: var(--c-gray-600); font-size: var(--fs-sm); margin-top: var(--sp-2);"><i class="fas fa-circle-info" style="color: var(--c-gold);"></i> Para descargar una imagen: hacé clic en el botón "Descargar" debajo · En celular, mantené presionada la imagen → "Guardar".</p>
+
+        <div data-kits></div>
+      </section>
+
+      <!-- ===== 7. ACTUALIZAR ===== -->
+      <section id="actualizar" style="margin-bottom: var(--sp-9);">
+        <h2>7. Cómo pedir <em>cambios o actualizaciones</em></h2>
+        <p>Vos no necesitás tocar código para nada. Si necesitás:</p>
+
+        <ul style="padding-left: var(--sp-5); line-height: 2;">
+          <li>Cambiar un precio, agregar o sacar un perfume → <strong>avisame</strong>. Una vez que sumás el producto a Extracto Importado, re-sincronizo el catálogo en 5 minutos.</li>
+          <li>Cambiar un descuento, un código o una fecha de campaña → <strong>avisame</strong>, se edita en 1 archivo y publico de nuevo.</li>
+          <li>Sumar una promo nueva (ej. <em>"Primavera"</em>, <em>"Aniversario del local"</em>) → <strong>avisame</strong>, se puede armar en pocas horas.</li>
+          <li>Cambiar textos, fotos del home, testimonios → <strong>avisame</strong> con el texto nuevo.</li>
+          <li>Conectar Google Analytics o Facebook Pixel → <strong>avisame</strong>, necesito solo el ID que te den.</li>
+          <li>Enchufar un dominio propio (<em>.com.ar</em>) → <strong>avisame</strong> cuando lo compres.</li>
+        </ul>
+
+        <div class="callout">
+          <strong><i class="fas fa-wrench"></i> Para todo esto:</strong>
+          <a href="https://wa.me/5491166967597" target="_blank" rel="noopener" style="color: var(--c-gold);">escribime por WhatsApp</a> con el pedido concreto y lo resuelvo.
+        </div>
+      </section>
+
+      <!-- ===== 8. TIPS ===== -->
+      <section id="tips" style="margin-bottom: var(--sp-9);">
+        <h2>8. Consejos <em>rápidos</em></h2>
+
+        <div class="callout">
+          <i class="fas fa-mobile-screen" style="color: var(--c-gold);"></i>
+          <strong>Probá tu sitio en el celular:</strong> abrí <a href="https://aromazperfumshop.netlify.app/" target="_blank" rel="noopener">aromazperfumshop.netlify.app</a> desde tu teléfono — la mayoría de tus clientes lo va a ver desde ahí.
+        </div>
+
+        <div class="callout">
+          <i class="fas fa-link" style="color: var(--c-gold);"></i>
+          <strong>Links cortos que te van a servir:</strong>
+          <ul style="margin-top: var(--sp-2); padding-left: var(--sp-5); line-height: 1.9;">
+            <li>Catálogo completo → <code>aromazperfumshop.netlify.app/catalogo</code></li>
+            <li>Todas las promos → <code>aromazperfumshop.netlify.app/promos</code></li>
+            <li>Empresas / regalos corporativos → <code>aromazperfumshop.netlify.app/empresas</code></li>
+            <li>Revendedores → <code>aromazperfumshop.netlify.app/revende</code></li>
+          </ul>
+        </div>
+
+        <div class="callout">
+          <i class="fas fa-comment" style="color: var(--c-gold);"></i>
+          <strong>Cuando el cliente llegue por WhatsApp:</strong> el mensaje automático ya te viene con el detalle del carrito y, si vino desde una promo, con la línea <code>🎁 Código promo: XXX</code>. Mirá esa línea antes de pasar el total final, y aplicale el descuento correspondiente.
+        </div>
+
+        <div class="callout info">
+          <i class="fas fa-chart-line"></i>
+          <strong>Google Analytics (opcional):</strong> hoy el sitio está listo para medir visitas, clics y pedidos. Solo falta que me pases el ID (lo generás gratis en <a href="https://analytics.google.com" target="_blank" rel="noopener">analytics.google.com</a>) y lo conectamos en 1 minuto.
+        </div>
+      </section>
+
+      <hr style="border: none; border-top: 1px solid var(--c-gray-100); margin: var(--sp-8) 0;">
+
+      <div style="text-align: center; color: var(--c-gray-600); font-size: var(--fs-sm);">
+        <p>Esta guía es privada (no aparece en Google ni en el menú). Guardala en favoritos.</p>
+      </div>
+
+    </div>
+  </main>
+
+  <script>
+  (function renderKits() {
+    const domain = 'aromazperfumshop.netlify.app';
+    const promos = [
+      {
+        id: 'dia-del-padre', title: 'Día del Padre', code: 'PAPA2026', badge: '20% OFF en 2', date: 'Domingo 21 de junio de 2026', banner: '2 semanas antes al 28-jun',
+        img: 'images/promos-posts/dia-del-padre.png', url: 'promo-dia-del-padre.html',
+        caption: `👔 Día del Padre en Aromaz Perfum Shop\n\nRegalale a papá una fragancia de 10: llevá 2 perfumes masculinos o unisex y aprovechá 20% OFF + envío gratis en CABA y GBA.\n\n🎁 Código: PAPA2026\n📍 Link en bio → promo-dia-del-padre\n💳 Aceptamos transferencia (10% extra OFF), MercadoPago y efectivo.\n\n#DiaDelPadre2026 #PerfumesHombre #RegalosPapá #AromazPerfumShop #ExtractoImportado #PerfumesImportados #ArgentinaShop`,
+        wa: `Hola! 👔 Se viene el Día del Padre (21-jun) y tenemos promo: 20% OFF llevando 2 perfumes + envío gratis CABA y GBA. Código: *PAPA2026*. Mirá la selección → https://${'aromazperfumshop.netlify.app'}/promo-dia-del-padre ¿Te paso ideas?`
+      },
+      {
+        id: 'dia-de-la-madre', title: 'Día de la Madre', code: 'MAMA2026', badge: '20% OFF + envoltorio', date: 'Domingo 18 de octubre de 2026', banner: '4-oct al 25-oct',
+        img: 'images/promos-posts/dia-de-la-madre.png', url: 'promo-dia-de-la-madre.html',
+        caption: `💐 Día de la Madre en Aromaz Perfum Shop\n\nPara la mujer más importante: 20% OFF llevando 2 fragancias femeninas o unisex + envoltorio premium sin cargo con tarjeta escrita a mano.\n\n🎁 Código: MAMA2026\n📍 Link en bio → promo-dia-de-la-madre\n💳 Transferencia (10% extra), MercadoPago hasta 3 cuotas.\n\n#DiaDeLaMadre2026 #RegalosMamá #PerfumesMujer #AromazPerfumShop #ExtractoImportado`,
+        wa: `Hola! 💐 ¡Día de la Madre a la vista! Tenemos 20% OFF llevando 2 perfumes para ella + envoltorio premium de regalo. Código *MAMA2026*. Mirá las opciones → https://${'aromazperfumshop.netlify.app'}/promo-dia-de-la-madre ¿Te ayudo a elegir?`
+      },
+      {
+        id: 'cyber-monday', title: 'Cyber Monday', code: 'CYBER2026', badge: '25% OFF', date: '1ra semana de noviembre 2026 (CACE)', banner: '20-oct al 9-nov',
+        img: 'images/promos-posts/cyber-monday.png', url: 'promo-cyber-monday.html',
+        caption: `⚡ CYBER MONDAY ARGENTINA\n\n72 horas de precios únicos: 25% OFF en todo el catálogo de Aromaz Perfum Shop. Aplicable a cualquier presentación, pedido mínimo 2 unidades.\n\n🎁 Código: CYBER2026\n📍 Link en bio → promo-cyber-monday\n💳 Combinable con 3 cuotas sin interés de MercadoPago.\n\n#CyberMondayAR #CyberMonday2026 #PerfumesImportados #AromazPerfumShop #CACE`,
+        wa: `Hola! ⚡ Estamos en CYBER MONDAY AR con 25% OFF en toda la tienda (mínimo 2 unidades). Código *CYBER2026*. Mirá → https://${'aromazperfumshop.netlify.app'}/promo-cyber-monday Duración: 72hs. Si ves algo, avisame que te reservo stock.`
+      },
+      {
+        id: 'black-friday', title: 'Black Friday', code: 'BLACK2026', badge: '20% OFF + envío', date: 'Viernes 27 de noviembre 2026', banner: '13-nov al 4-dic',
+        img: 'images/promos-posts/black-friday.png', url: 'promo-black-friday.html',
+        caption: `🔥 BLACK FRIDAY AROMAZ\n\n20% OFF en todo el catálogo + envío gratis a todo el país. Es la oportunidad del año para armar tu kit de verano, adelantar regalos navideños o cambiar tu fragancia diaria.\n\n🎁 Código: BLACK2026\n📍 Link en bio → promo-black-friday\n📦 Envío gratis · todo el país\n💳 Transferencia (10% extra), MercadoPago 3 cuotas.\n\n#BlackFriday2026 #BlackFridayAR #PerfumesEnOferta #AromazPerfumShop`,
+        wa: `Hola! 🔥 Es BLACK FRIDAY: 20% OFF + envío gratis a todo el país. Código *BLACK2026*. Mirá → https://${'aromazperfumshop.netlify.app'}/promo-black-friday Dura sólo el finde. ¿Te armo un pack?`
+      },
+      {
+        id: 'navidad', title: 'Navidad', code: 'NAVIDAD2026', badge: 'Gift Box + 15%', date: 'Viernes 25 de diciembre 2026', banner: '1-dic al 26-dic',
+        img: 'images/promos-posts/navidad.png', url: 'promo-navidad.html',
+        caption: `🎄 Navidad en Aromaz Perfum Shop\n\nRegalos que se recuerdan. Elegí 2 fragancias cualesquiera, aplicamos 15% OFF al total y sumamos GIFT BOX NAVIDEÑO premium (caja, moño dorado y tarjeta a mano) sin cargo.\n\n🎁 Código: NAVIDAD2026\n📍 Link en bio → promo-navidad\n🚚 Envíos express para que llegue a tiempo.\n\n#NavidadAromaz #RegalosNavidad #GiftBox #PerfumesImportados #AromazPerfumShop`,
+        wa: `Hola! 🎄 ¡Se viene Navidad! Armamos el regalo por vos: 2 perfumes con 15% OFF + Gift Box premium sin cargo. Código *NAVIDAD2026*. Mirá → https://${'aromazperfumshop.netlify.app'}/promo-navidad ¿Te paso ideas según la persona?`
+      },
+      {
+        id: 'reyes', title: 'Reyes', code: 'REYES2027', badge: '10% OFF + envío', date: 'Miércoles 6 de enero de 2027', banner: '26-dic al 13-ene',
+        img: 'images/promos-posts/reyes.png', url: 'promo-reyes.html',
+        caption: `👑 Noche de Reyes 2027\n\nEl último regalo de la temporada no se olvida. 10% OFF en todo el catálogo + envío gratis para que llegue la noche del 5.\n\n🎁 Código: REYES2027\n📍 Link en bio → promo-reyes\n🚚 Entregas programadas hasta el 5-ene.\n\n#Reyes2027 #NocheDeReyes #Regalos #AromazPerfumShop`,
+        wa: `Hola! 👑 ¡Cerrá las fiestas con el regalo de Reyes! 10% OFF + envío gratis, entrega coordinada para la noche del 5. Código *REYES2027*. Mirá → https://${'aromazperfumshop.netlify.app'}/promo-reyes`
+      },
+      {
+        id: 'generica', title: 'Genérica — Llevá 2', code: 'AROMAZ15', badge: '15% OFF', date: 'Todo el año', banner: '(no aparece en banner)',
+        img: 'images/promos-posts/generica.png', url: 'promo-generica.html',
+        caption: `✨ Llevá 2, pagá 15% menos\n\nLa promo que siempre está: elegí 2 fragancias cualesquiera y te hacemos 15% OFF en el total. Para vos, para regalar o para sumar a tu colección.\n\n🎁 Código: AROMAZ15\n📍 Link en bio → promo-generica\n💳 Transferencia (10% extra), MercadoPago 3 cuotas.\n\n#PerfumesImportados #AromazPerfumShop #ExtractoImportado #Fragancias`,
+        wa: `Hola! ✨ ¿Sabías que llevando 2 perfumes te hacemos 15% OFF en el total? Aplica a cualquier presentación. Código *AROMAZ15*. Mirá las opciones → https://${'aromazperfumshop.netlify.app'}/promo-generica`
+      },
+      {
+        id: 'cumpleanos', title: 'Cumpleaños', code: 'CUMPLE15', badge: '15% OFF + tarjeta', date: 'Todo el año', banner: '(no aparece en banner)',
+        img: 'images/promos-posts/cumpleanos.png', url: 'promo-cumpleanos.html',
+        caption: `🎂 ¿Tenés un cumple en puerta?\n\nUn perfume queda siempre bien y se nota. Elegí 2 fragancias y aprovechá 15% OFF en el total. Sumamos una tarjeta personalizada escrita a mano con el mensaje que quieras.\n\n🎁 Código: CUMPLE15\n📍 Link en bio → promo-cumpleanos\n\n#RegalosCumpleaños #AromazPerfumShop #PerfumesImportados`,
+        wa: `Hola! 🎂 ¿Tenés un cumple esta semana? Armamos el regalo: 2 perfumes con 15% OFF + tarjeta escrita a mano. Código *CUMPLE15*. Mirá → https://${'aromazperfumshop.netlify.app'}/promo-cumpleanos ¿Cómo es la persona?`
+      },
+      {
+        id: 'pareja', title: 'Regalo para tu pareja', code: 'PAREJA20', badge: '20% OFF · 2x', date: 'Todo el año', banner: '(no aparece en banner)',
+        img: 'images/promos-posts/pareja.png', url: 'promo-pareja.html',
+        caption: `💕 La pareja perfecta también en fragancias\n\nArmá el pack él + ella (o unisex + unisex, como prefieran) y aprovechá 20% OFF. Ideal para aniversarios, San Valentín o porque sí. Incluye packaging romántico sin cargo.\n\n🎁 Código: PAREJA20\n📍 Link en bio → promo-pareja\n\n#Aniversario #RegaloPareja #SanValentin #AromazPerfumShop`,
+        wa: `Hola! 💕 Armamos pack para parejas: uno para él + una para ella con 20% OFF + packaging romántico de regalo. Código *PAREJA20*. Mirá → https://${'aromazperfumshop.netlify.app'}/promo-pareja ¿Se vienen aniversarios?`
+      }
+    ];
+
+    const container = document.querySelector('[data-kits]');
+    container.innerHTML = promos.map(p => {
+      const fullUrl = `https://${domain}/${p.url}`;
+      const imgStory = p.img.replace('.png', '-story.png');
+      return `
+        <div class="promo-kit" id="kit-${p.id}">
+          <div class="visual">
+            <div class="asset-row">
+              <div class="asset-card">
+                <div class="tag"><span>Post feed</span><span>1080×1080</span></div>
+                <img src="${p.img}" alt="Post cuadrado ${p.title}" loading="lazy">
+                <div class="download-row">
+                  <a class="btn btn-dark btn-sm" href="${p.img}" download="aromaz-${p.id}-post.png"><i class="fas fa-download"></i> Descargar</a>
+                </div>
+              </div>
+              <div class="asset-card">
+                <div class="tag"><span>Story · WA</span><span>1080×1920</span></div>
+                <img src="${imgStory}" alt="Historia / estado de WhatsApp ${p.title}" loading="lazy">
+                <div class="download-row">
+                  <a class="btn btn-dark btn-sm" href="${imgStory}" download="aromaz-${p.id}-story.png"><i class="fas fa-download"></i> Descargar</a>
+                </div>
+              </div>
+            </div>
+            <div class="download-row" style="display:flex; gap:var(--sp-2); margin-top:var(--sp-2);">
+              <a class="btn btn-outline btn-sm" style="flex:1; text-align:center;" href="${p.url}" target="_blank"><i class="fas fa-eye"></i> Ver landing</a>
+            </div>
+          </div>
+          <div class="info">
+            <h3>${p.title} <em>· ${p.badge}</em></h3>
+            <div class="meta">
+              <span>Código: <strong>${p.code}</strong></span>
+              <span>Fecha: <strong>${p.date}</strong></span>
+              <span>Banner: <strong>${p.banner}</strong></span>
+            </div>
+
+            <div class="block-label">Link para compartir (muestra un preview hermoso) <button class="copy-btn" data-copy="${fullUrl}">Copiar</button></div>
+            <div class="copyable">${fullUrl}</div>
+
+            <div class="block-label">Caption para Instagram (post / reel) <button class="copy-btn" data-copy-sel="#kit-${p.id} .cap-${p.id}">Copiar</button></div>
+            <div class="copyable cap-${p.id}">${p.caption}</div>
+
+            <div class="block-label">Mensaje para WhatsApp <button class="copy-btn" data-copy-sel="#kit-${p.id} .wa-${p.id}">Copiar</button></div>
+            <div class="copyable wa-${p.id}">${p.wa}</div>
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    document.addEventListener('click', (e) => {
+      const btn = e.target.closest('.copy-btn');
+      if (!btn) return;
+      let text = '';
+      if (btn.dataset.copy) text = btn.dataset.copy;
+      else if (btn.dataset.copySel) text = document.querySelector(btn.dataset.copySel)?.textContent || '';
+      if (!text) return;
+      navigator.clipboard.writeText(text).then(() => {
+        const old = btn.textContent;
+        btn.textContent = '✓ Copiado';
+        btn.classList.add('copied');
+        setTimeout(() => { btn.textContent = old; btn.classList.remove('copied'); }, 1500);
+      }).catch(() => {
+        alert('No se pudo copiar automáticamente. Seleccioná y copiá manualmente.');
+      });
+    });
+  })();
+  </script>
+</body>
+</html>

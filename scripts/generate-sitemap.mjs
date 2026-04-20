@@ -1,7 +1,7 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 
-const DOMAIN = 'https://aromazperfumshop.com.ar';
+const DOMAIN = 'https://aromazperfumshop.netlify.app';
 const ROOT = path.resolve(process.cwd());
 
 const staticPages = [
