@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/components.css">
   <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="css/promos.css">
   <link rel="icon" type="image/jpeg" href="images/logo/aromaz-instagram.jpg">
 </head>
 <body>
@@ -49,6 +50,7 @@
   <script src="js/cart.js"></script>
   <script src="js/whatsapp.js"></script>
   <script src="js/products.js"></script>
+  <script src="js/promos.js"></script>
   <script src="js/layout.js"></script>
   <script src="js/main.js"></script>
 
@@ -81,8 +83,15 @@
       const envioGratis = subtotal >= AROMAZ.envioGratisDesde;
       const faltaEnvioGratis = envioGratis ? 0 : AROMAZ.envioGratisDesde - subtotal;
 
+      // Pre-cargar cupón si veníamos de una landing de promo
+      const activePromo = AROMAZ.promos?.getActive?.();
+      if (activePromo && !sessionStorage.getItem('aromaz-coupon')) {
+        sessionStorage.setItem('aromaz-coupon', activePromo.code);
+      }
       const coupon = sessionStorage.getItem('aromaz-coupon') || '';
-      const discount = coupon === 'TRANSF10' ? Math.round(subtotal * 0.1) : 0;
+      const promoInfo = AROMAZ.promos?.list.find(p => p.code === coupon);
+      // Sólo TRANSF10 / BIENVENIDO10 aplican descuento inmediato; los cupones de campañas se informan al operador.
+      const discount = (coupon === 'TRANSF10' || coupon === 'BIENVENIDO10') ? Math.round(subtotal * 0.1) : 0;
       const total = subtotal - discount;
 
       layout.innerHTML = `
@@ -152,6 +161,12 @@
             <input type="text" placeholder="Código de cupón" id="couponInput" value="${coupon}">
             <button class="btn btn-dark btn-sm" data-apply-coupon>Aplicar</button>
           </div>
+          ${promoInfo ? `
+            <div style="margin-top:-4px; margin-bottom: var(--sp-3); padding: var(--sp-2) var(--sp-3); background: rgba(201,163,90,0.08); border-radius: var(--radius-sm); font-size: var(--fs-xs); color: var(--c-gray-700); border-left: 2px solid var(--c-gold);">
+              <i class="fas fa-tag" style="color: var(--c-gold);"></i>
+              Promo aplicada: <strong>${promoInfo.title}</strong> — se informará en WhatsApp.
+            </div>
+          ` : ''}
 
           <div class="shipping-calc">
             <label>Código postal (opcional)</label>
@@ -216,11 +231,17 @@
       }
       if (e.target.closest('[data-apply-coupon]')) {
         const v = document.getElementById('couponInput').value.trim().toUpperCase();
+        const validPromo = AROMAZ.promos?.list.find(p => p.code === v);
         if (v === 'TRANSF10' || v === 'BIENVENIDO10') {
-          sessionStorage.setItem('aromaz-coupon', 'TRANSF10');
+          sessionStorage.setItem('aromaz-coupon', v);
           AROMAZ.toast('Cupón aplicado: 10% OFF', 'success');
+        } else if (validPromo) {
+          sessionStorage.setItem('aromaz-coupon', v);
+          AROMAZ.promos.setActive(validPromo.id);
+          AROMAZ.toast(`Promo ${validPromo.title} aplicada`, 'success');
         } else if (!v) {
           sessionStorage.removeItem('aromaz-coupon');
+          AROMAZ.promos?.clearActive?.();
           AROMAZ.toast('Cupón quitado');
         } else {
           AROMAZ.toast('Cupón inválido', 'error');
@@ -238,7 +259,8 @@
         const items = AROMAZ.cart.load();
         if (!items.length) { AROMAZ.toast('Tu carrito está vacío', 'error'); return; }
         const cp = document.getElementById('cpInput')?.value?.trim() || '';
-        AROMAZ.wa.openCheckout(items, AROMAZ.cart.total(), cp);
+        const promoCode = sessionStorage.getItem('aromaz-coupon') || '';
+        AROMAZ.wa.openCheckout(items, AROMAZ.cart.total(), cp, promoCode);
       }
     });
   </script>

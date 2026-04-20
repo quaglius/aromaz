@@ -13,7 +13,17 @@ const staticPages = [
   { loc: '/contacto.html', priority: '0.5', changefreq: 'monthly' },
   { loc: '/empresas.html', priority: '0.8', changefreq: 'monthly' },
   { loc: '/revende.html', priority: '0.8', changefreq: 'monthly' },
-  { loc: '/terminos.html', priority: '0.3', changefreq: 'yearly' }
+  { loc: '/terminos.html', priority: '0.3', changefreq: 'yearly' },
+  { loc: '/promos.html', priority: '0.8', changefreq: 'weekly' },
+  { loc: '/promo-generica.html', priority: '0.7', changefreq: 'monthly' },
+  { loc: '/promo-dia-del-padre.html', priority: '0.7', changefreq: 'monthly' },
+  { loc: '/promo-dia-de-la-madre.html', priority: '0.7', changefreq: 'monthly' },
+  { loc: '/promo-cyber-monday.html', priority: '0.7', changefreq: 'monthly' },
+  { loc: '/promo-black-friday.html', priority: '0.7', changefreq: 'monthly' },
+  { loc: '/promo-navidad.html', priority: '0.7', changefreq: 'monthly' },
+  { loc: '/promo-reyes.html', priority: '0.7', changefreq: 'monthly' },
+  { loc: '/promo-cumpleanos.html', priority: '0.7', changefreq: 'monthly' },
+  { loc: '/promo-pareja.html', priority: '0.7', changefreq: 'monthly' }
 ];
 
 const today = new Date().toISOString().slice(0, 10);

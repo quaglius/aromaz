@@ -62,6 +62,57 @@
   to = "/catalogo.html"
   status = 200
 
+# Promos — URLs amigables
+[[redirects]]
+  from = "/promos"
+  to = "/promos.html"
+  status = 200
+
+[[redirects]]
+  from = "/promo/generica"
+  to = "/promo-generica.html"
+  status = 200
+
+[[redirects]]
+  from = "/promo/dia-del-padre"
+  to = "/promo-dia-del-padre.html"
+  status = 200
+
+[[redirects]]
+  from = "/promo/dia-de-la-madre"
+  to = "/promo-dia-de-la-madre.html"
+  status = 200
+
+[[redirects]]
+  from = "/promo/cyber-monday"
+  to = "/promo-cyber-monday.html"
+  status = 200
+
+[[redirects]]
+  from = "/promo/black-friday"
+  to = "/promo-black-friday.html"
+  status = 200
+
+[[redirects]]
+  from = "/promo/navidad"
+  to = "/promo-navidad.html"
+  status = 200
+
+[[redirects]]
+  from = "/promo/reyes"
+  to = "/promo-reyes.html"
+  status = 200
+
+[[redirects]]
+  from = "/promo/cumpleanos"
+  to = "/promo-cumpleanos.html"
+  status = 200
+
+[[redirects]]
+  from = "/promo/pareja"
+  to = "/promo-pareja.html"
+  status = 200
+
 # Headers globales: seguridad + performance
 [[headers]]
   for = "/*"

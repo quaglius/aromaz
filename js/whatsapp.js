@@ -6,7 +6,7 @@ window.AROMAZ = window.AROMAZ || {};
 
 AROMAZ.wa = {
   // Mensaje desde carrito
-  checkoutMessage(items, total, codigoPostal = '') {
+  checkoutMessage(items, total, codigoPostal = '', promoCode = '') {
     const lines = [
       '¡Hola! 👋 Quiero hacer un pedido desde Aromaz Perfum Shop:',
       '',
@@ -17,6 +17,10 @@ AROMAZ.wa = {
     }
     lines.push('');
     lines.push(`💰 *TOTAL: ${AROMAZ.formatMoney(total)}*`);
+    if (promoCode) {
+      lines.push('');
+      lines.push(`🎁 *Código promo:* ${promoCode}`);
+    }
     lines.push('');
     if (codigoPostal) {
       lines.push(`📍 Mi código postal: ${codigoPostal}`);
@@ -87,8 +91,8 @@ AROMAZ.wa = {
     return '¡Hola! 👋 Me interesa saber cómo ser revendedor de Aromaz. ¿Me pueden enviar información?';
   },
 
-  openCheckout(items, total, codigoPostal = '') {
-    const msg = this.checkoutMessage(items, total, codigoPostal);
+  openCheckout(items, total, codigoPostal = '', promoCode = '') {
+    const msg = this.checkoutMessage(items, total, codigoPostal, promoCode);
     if (window.gtag) {
       gtag('event', 'begin_checkout', {
         currency: 'ARS',

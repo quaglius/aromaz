@@ -8,7 +8,9 @@
     "scrape": "node scripts/scrape-products.mjs",
     "enrich": "node scripts/enrich-products.mjs",
     "sitemap": "node scripts/generate-sitemap.mjs",
+    "promos": "node scripts/generate-promo-landings.mjs",
     "test": "node scripts/test-pages.mjs",
+    "test:promos": "node scripts/test-promos.mjs",
     "dev": "npx serve -l 3000 ."
   },
   "devDependencies": {

@@ -12,5 +12,17 @@
 /favoritos   /favoritos.html   200
 /catalogo    /catalogo.html    200
 
+# Promos (URLs amigables)
+/promos                   /promos.html                    200
+/promo/generica           /promo-generica.html            200
+/promo/dia-del-padre      /promo-dia-del-padre.html       200
+/promo/dia-de-la-madre    /promo-dia-de-la-madre.html     200
+/promo/cyber-monday       /promo-cyber-monday.html        200
+/promo/black-friday       /promo-black-friday.html        200
+/promo/navidad            /promo-navidad.html             200
+/promo/reyes              /promo-reyes.html               200
+/promo/cumpleanos         /promo-cumpleanos.html          200
+/promo/pareja             /promo-pareja.html              200
+
 # 404 fallback
 /*  /index.html  404

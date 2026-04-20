@@ -152,6 +152,7 @@
                 <li><a href="nosotros.html">Nosotros</a></li>
                 <li><a href="empresas.html">Empresas & Eventos</a></li>
                 <li><a href="revende.html">Revende Extracto</a></li>
+                <li><a href="promos.html">Promociones</a></li>
                 <li><a href="faq.html">Preguntas frecuentes</a></li>
                 <li><a href="terminos.html">Términos y condiciones</a></li>
                 <li><a href="envios.html">Política de envíos</a></li>
@@ -282,8 +283,37 @@
     gtag('config', id, { anonymize_ip: true });
   }
 
+  function ensurePromosStylesheet() {
+    if (document.querySelector('link[data-promos-css]')) return;
+    if (document.querySelector('link[href$="css/promos.css"]')) return;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = 'css/promos.css';
+    link.setAttribute('data-promos-css', '');
+    document.head.appendChild(link);
+  }
+
+  function ensurePromosScript() {
+    return new Promise((resolve) => {
+      if (window.AROMAZ?.promos) return resolve();
+      const existing = document.querySelector('script[src$="js/promos.js"]');
+      if (existing) {
+        existing.addEventListener('load', () => resolve(), { once: true });
+        if (window.AROMAZ?.promos) resolve();
+        return;
+      }
+      const s = document.createElement('script');
+      s.src = 'js/promos.js';
+      s.onload = () => resolve();
+      s.onerror = () => resolve();
+      document.head.appendChild(s);
+    });
+  }
+
   AROMAZ.layout = {
     render({ activeNav = '', title, description, path, image } = {}) {
+      ensurePromosStylesheet();
+
       const layoutRoot = document.getElementById('layout-header');
       if (layoutRoot) layoutRoot.outerHTML = buildHeader(activeNav) + buildSearchOverlay() + buildMobileDrawer(activeNav);
       const footRoot = document.getElementById('layout-footer');
@@ -292,6 +322,13 @@
       if (title || description) setMetaTags({ title, description, path, image });
 
       injectGA4();
+
+      // Banner global de promos activas (si las hubiera)
+      ensurePromosScript().then(() => {
+        if (window.AROMAZ?.promos?.injectGlobalBanner) {
+          try { AROMAZ.promos.injectGlobalBanner(); } catch (e) { /* noop */ }
+        }
+      });
     },
     setMetaTags
   };
