@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mis favoritos — Aromaz Perfum Shop</title>
+  <meta name="robots" content="noindex,follow">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="icon" type="image/jpeg" href="images/logo/aromaz-instagram.jpg">
+</head>
+<body>
+  <div id="layout-header"></div>
+
+  <main>
+    <section class="page-hero">
+      <div class="container">
+        <span class="eyebrow">Tus elegidas</span>
+        <h1>Mis <em>favoritos</em></h1>
+        <p>Las fragancias que más te enamoraron, guardadas en un solo lugar.</p>
+      </div>
+    </section>
+
+    <div class="container">
+      <div class="breadcrumb">
+        <a href="index.html">Inicio</a>
+        <span class="separator">/</span>
+        <span>Favoritos</span>
+      </div>
+    </div>
+
+    <section class="container section">
+      <div data-favorites-container>
+        <div class="spinner"></div>
+      </div>
+    </section>
+  </main>
+
+  <div id="layout-footer"></div>
+
+  <script src="js/config.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/whatsapp.js"></script>
+  <script src="js/products.js"></script>
+  <script src="js/layout.js"></script>
+  <script src="js/main.js"></script>
+
+  <script>
+    AROMAZ.layout.render({
+      activeNav: '',
+      title: 'Mis favoritos — Aromaz Perfum Shop',
+      description: 'Las fragancias que más te gustaron, guardadas en tu lista de favoritos.',
+      path: '/favoritos'
+    });
+
+    async function render() {
+      const container = document.querySelector('[data-favorites-container]');
+      const skus = AROMAZ.favorites.list();
+
+      if (skus.length === 0) {
+        container.innerHTML = `
+          <div class="empty-state">
+            <i class="far fa-heart"></i>
+            <h2>Aún no tenés favoritos</h2>
+            <p>Explorá nuestro catálogo y tocá el ❤️ en los productos que más te gusten para guardarlos acá.</p>
+            <a href="catalogo.html" class="btn btn-primary btn-lg">
+              <i class="fas fa-compass"></i> Explorar catálogo
+            </a>
+          </div>
+        `;
+        return;
+      }
+
+      const products = await AROMAZ.products.all();
+      const favs = products.filter(p => skus.includes(p.sku));
+
+      container.innerHTML = `
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: var(--sp-5); flex-wrap:wrap; gap: var(--sp-3);">
+          <p style="color: var(--c-gray-600);"><strong style="color: var(--c-black);">${favs.length}</strong> producto${favs.length !== 1 ? 's' : ''} favorito${favs.length !== 1 ? 's' : ''}</p>
+          <button class="btn-clear-filters" data-clear-favs>
+            <i class="fas fa-trash"></i> Vaciar favoritos
+          </button>
+        </div>
+        <div class="product-grid">
+          ${favs.map(p => AROMAZ.products.renderCard(p)).join('')}
+        </div>
+      `;
+    }
+
+    render();
+    document.addEventListener('favorites:updated', render);
+
+    document.addEventListener('click', (e) => {
+      if (e.target.closest('[data-clear-favs]')) {
+        if (confirm('¿Vaciar toda la lista de favoritos?')) {
+          AROMAZ.favorites._set.clear();
+          AROMAZ.favorites.save();
+          render();
+        }
+      }
+    });
+  </script>
+</body>
+</html>

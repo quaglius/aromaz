@@ -1,0 +1,270 @@
+{
+  "success": true,
+  "message": "Características obtenidas del cache exitosamente",
+  "data": {
+    "characteristics": [
+      {
+        "id": 1,
+        "slug": "genero",
+        "label": "Género",
+        "type": "multiselect",
+        "filterable": true,
+        "options": [
+          {
+            "id": 1,
+            "name": "femenino",
+            "label": "Femenino",
+            "productCharacteristicId": 1
+          },
+          {
+            "id": 2,
+            "name": "masculino",
+            "label": "Masculino",
+            "productCharacteristicId": 1
+          },
+          {
+            "id": 3,
+            "name": "unisex",
+            "label": "Unisex",
+            "productCharacteristicId": 1
+          }
+        ],
+        "categoryProductCharacteristics": [
+          {
+            "id": 1,
+            "categoryId": 2,
+            "productCharacteristicId": 1
+          },
+          {
+            "id": 2,
+            "categoryId": 1,
+            "productCharacteristicId": 1
+          },
+          {
+            "id": 3,
+            "categoryId": 6,
+            "productCharacteristicId": 1
+          },
+          {
+            "id": 16,
+            "categoryId": 7,
+            "productCharacteristicId": 1
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "slug": "familia-olfativa",
+        "label": "Familia olfativa",
+        "type": "multiselect",
+        "filterable": true,
+        "options": [
+          {
+            "id": 4,
+            "name": "citrica",
+            "label": "Cítrica",
+            "productCharacteristicId": 3
+          },
+          {
+            "id": 5,
+            "name": "floral",
+            "label": "Floral",
+            "productCharacteristicId": 3
+          },
+          {
+            "id": 6,
+            "name": "oriental",
+            "label": "Oriental",
+            "productCharacteristicId": 3
+          },
+          {
+            "id": 7,
+            "name": "amaderada",
+            "label": "Amaderada",
+            "productCharacteristicId": 3
+          },
+          {
+            "id": 8,
+            "name": "fougere",
+            "label": "Fougere",
+            "productCharacteristicId": 3
+          },
+          {
+            "id": 9,
+            "name": "acuatica",
+            "label": "Acuática",
+            "productCharacteristicId": 3
+          },
+          {
+            "id": 10,
+            "name": "chipre",
+            "label": "Chipre",
+            "productCharacteristicId": 3
+          }
+        ],
+        "categoryProductCharacteristics": [
+          {
+            "id": 7,
+            "categoryId": 2,
+            "productCharacteristicId": 3
+          },
+          {
+            "id": 8,
+            "categoryId": 1,
+            "productCharacteristicId": 3
+          },
+          {
+            "id": 9,
+            "categoryId": 6,
+            "productCharacteristicId": 3
+          },
+          {
+            "id": 18,
+            "categoryId": 7,
+            "productCharacteristicId": 3
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "slug": "estacion-ideal",
+        "label": "Estación ideal",
+        "type": "multiselect",
+        "filterable": true,
+        "options": [
+          {
+            "id": 11,
+            "name": "primavera",
+            "label": "Primavera",
+            "productCharacteristicId": 4
+          },
+          {
+            "id": 12,
+            "name": "verano",
+            "label": "Verano",
+            "productCharacteristicId": 4
+          },
+          {
+            "id": 13,
+            "name": "otono",
+            "label": "Otoño",
+            "productCharacteristicId": 4
+          },
+          {
+            "id": 14,
+            "name": "invierno",
+            "label": "Invierno",
+            "productCharacteristicId": 4
+          },
+          {
+            "id": 15,
+            "name": "todo_el_ano",
+            "label": "Todo el año",
+            "productCharacteristicId": 4
+          }
+        ],
+        "categoryProductCharacteristics": [
+          {
+            "id": 10,
+            "categoryId": 2,
+            "productCharacteristicId": 4
+          },
+          {
+            "id": 11,
+            "categoryId": 1,
+            "productCharacteristicId": 4
+          },
+          {
+            "id": 12,
+            "categoryId": 6,
+            "productCharacteristicId": 4
+          },
+          {
+            "id": 19,
+            "categoryId": 7,
+            "productCharacteristicId": 4
+          }
+        ]
+      },
+      {
+        "id": 5,
+        "slug": "momento-del-dia",
+        "label": "Momento del día",
+        "type": "multiselect",
+        "filterable": true,
+        "options": [
+          {
+            "id": 16,
+            "name": "dia",
+            "label": "Día",
+            "productCharacteristicId": 5
+          },
+          {
+            "id": 17,
+            "name": "noche",
+            "label": "Noche",
+            "productCharacteristicId": 5
+          },
+          {
+            "id": 18,
+            "name": "dia_noche",
+            "label": "Día/Noche",
+            "productCharacteristicId": 5
+          }
+        ],
+        "categoryProductCharacteristics": [
+          {
+            "id": 13,
+            "categoryId": 2,
+            "productCharacteristicId": 5
+          },
+          {
+            "id": 14,
+            "categoryId": 1,
+            "productCharacteristicId": 5
+          },
+          {
+            "id": 15,
+            "categoryId": 6,
+            "productCharacteristicId": 5
+          },
+          {
+            "id": 20,
+            "categoryId": 7,
+            "productCharacteristicId": 5
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "slug": "notas-olfativas",
+        "label": "Notas olfativas",
+        "type": "text",
+        "filterable": false,
+        "options": [],
+        "categoryProductCharacteristics": [
+          {
+            "id": 4,
+            "categoryId": 2,
+            "productCharacteristicId": 2
+          },
+          {
+            "id": 5,
+            "categoryId": 1,
+            "productCharacteristicId": 2
+          },
+          {
+            "id": 6,
+            "categoryId": 6,
+            "productCharacteristicId": 2
+          },
+          {
+            "id": 17,
+            "categoryId": 7,
+            "productCharacteristicId": 2
+          }
+        ]
+      }
+    ]
+  }
+}

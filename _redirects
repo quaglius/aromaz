@@ -1,0 +1,16 @@
+# URLs limpias
+/producto/:slug      /producto.html?p=:slug          200
+/catalogo/:categoria /catalogo.html?categoria=:categoria 200
+/nosotros    /nosotros.html    200
+/faq         /faq.html         200
+/envios      /envios.html      200
+/contacto    /contacto.html    200
+/empresas    /empresas.html    200
+/revende     /revende.html     200
+/terminos    /terminos.html    200
+/carrito     /carrito.html     200
+/favoritos   /favoritos.html   200
+/catalogo    /catalogo.html    200
+
+# 404 fallback
+/*  /index.html  404

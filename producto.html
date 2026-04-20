@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-title>Producto — Aromaz Perfum Shop</title>
+  <meta name="description" data-description content="Perfume importado de alta calidad. Envíos a todo el país.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="icon" type="image/jpeg" href="images/logo/aromaz-instagram.jpg">
+</head>
+<body>
+  <div id="layout-header"></div>
+
+  <main>
+    <div class="container">
+      <nav class="breadcrumb" data-breadcrumb aria-label="Breadcrumb">
+        <a href="index.html">Inicio</a>
+        <span class="separator">/</span>
+        <a href="catalogo.html">Catálogo</a>
+        <span class="separator">/</span>
+        <span data-breadcrumb-cat>Producto</span>
+      </nav>
+    </div>
+
+    <section class="container">
+      <div class="product-detail" data-product-detail>
+        <div class="spinner" style="grid-column:1/-1"></div>
+      </div>
+    </section>
+
+    <section class="container">
+      <div class="detail-tabs" data-product-tabs style="display:none"></div>
+    </section>
+
+    <section class="related-products">
+      <div class="container">
+        <div class="section-header">
+          <span class="eyebrow">Quizás te guste</span>
+          <h2>Productos relacionados</h2>
+          <div class="ornament"><i class="fas fa-gem"></i></div>
+        </div>
+        <div class="product-grid" data-related></div>
+      </div>
+    </section>
+  </main>
+
+  <div id="layout-footer"></div>
+
+  <script src="js/config.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/whatsapp.js"></script>
+  <script src="js/products.js"></script>
+  <script src="js/layout.js"></script>
+  <script src="js/main.js"></script>
+
+  <script>
+    AROMAZ.layout.render({ activeNav: 'catalog' });
+
+    (async function () {
+      const slug = new URLSearchParams(window.location.search).get('p');
+      const container = document.querySelector('[data-product-detail]');
+      if (!slug) {
+        container.innerHTML = `<div class="no-results" style="grid-column:1/-1"><i class="fas fa-exclamation-triangle"></i><h3>Producto no encontrado</h3><a href="catalogo.html" class="btn btn-dark">Ver catálogo</a></div>`;
+        return;
+      }
+      const p = await AROMAZ.products.bySlug(slug);
+      if (!p) {
+        container.innerHTML = `<div class="no-results" style="grid-column:1/-1"><i class="fas fa-exclamation-triangle"></i><h3>Producto no encontrado</h3><a href="catalogo.html" class="btn btn-dark">Ver catálogo</a></div>`;
+        return;
+      }
+
+      // Meta + title
+      const titleStr = `${p.nombre}${p.equivalencia ? ' — Inspirada en ' + p.equivalencia : ''} | Aromaz Perfum Shop`;
+      document.querySelector('[data-title]').textContent = titleStr;
+      document.title = titleStr;
+      document.querySelector('[data-description]').setAttribute('content', `${p.nombre}, fragancia ${p.genero}${p.equivalencia ? ' inspirada en ' + p.equivalencia : ''}. Desde ${AROMAZ.formatMoney(p.precioDesde)}. Envíos a todo el país.`);
+
+      // Breadcrumb
+      document.querySelector('[data-breadcrumb-cat]').textContent = p.nombre;
+
+      // Schema.org
+      const schema = {
+        "@context": "https://schema.org",
+        "@type": "Product",
+        "name": p.nombre + (p.equivalencia ? ' - Inspirada en ' + p.equivalencia : ''),
+        "image": p.imagenes.map(i => `https://${AROMAZ.domain}/${i}`),
+        "description": p.descripcion,
+        "sku": p.sku,
+        "brand": { "@type": "Brand", "name": "Extracto Importado" },
+        "offers": {
+          "@type": "AggregateOffer",
+          "priceCurrency": "ARS",
+          "lowPrice": p.precioDesde,
+          "highPrice": p.precioHasta,
+          "availability": p.stockTotal > 0 ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
+          "seller": { "@type": "Organization", "name": "Aromaz Perfum Shop" }
+        },
+        "aggregateRating": { "@type": "AggregateRating", "ratingValue": p.rating, "reviewCount": p.reviewsCount }
+      };
+      const script = document.createElement('script');
+      script.type = 'application/ld+json';
+      script.textContent = JSON.stringify(schema);
+      document.head.appendChild(script);
+
+      const presentaciones = p.presentaciones;
+      const firstDisponible = presentaciones.findIndex(v => v.disponible);
+      const initialIdx = firstDisponible >= 0 ? firstDisponible : 0;
+      let selectedIdx = initialIdx;
+      let selectedQty = 1;
+
+      const badges = [];
+      if (p.bestseller) badges.push('<span class="badge badge-bestseller">Más vendido</span>');
+      if (p.nuevo) badges.push('<span class="badge badge-new">Nuevo</span>');
+      if (p.stockTotal > 0 && p.stockTotal < 5) badges.push('<span class="badge badge-stock">Últimas unidades</span>');
+
+      // Lowest stock among available
+      const stockTotal = p.stockTotal;
+      const stockMsg = stockTotal < 10 && stockTotal > 0 ? `¡Solo quedan ${stockTotal} unidades!` : null;
+
+      const soldCount = p.reviewsCount * 3 + 42;
+
+      container.innerHTML = `
+        <div class="product-gallery">
+          <div class="gallery-main" data-gallery-main>
+            <img src="${p.imagenPrincipal}" alt="${p.nombre}" id="mainImage">
+          </div>
+          <div class="gallery-thumbs">
+            ${p.imagenes.map((img, i) => `
+              <div class="gallery-thumb ${i === 0 ? 'is-active' : ''}" data-img="${img}">
+                <img src="${img}" alt="${p.nombre} vista ${i+1}" loading="lazy">
+              </div>
+            `).join('')}
+          </div>
+        </div>
+
+        <div class="product-detail-info">
+          ${badges.length ? `<div class="product-badges-inline">${badges.join('')}</div>` : ''}
+          <span class="product-gender">${p.genero.charAt(0).toUpperCase() + p.genero.slice(1)}${p.familiaOlfativa?.[0] ? ' · Familia ' + p.familiaOlfativa[0] : ''}</span>
+          <h1>${p.nombre}</h1>
+          ${p.equivalencia ? `<p class="equivalence">Inspirada en <strong>${p.equivalencia}</strong></p>` : ''}
+
+          <div class="detail-rating">
+            <span class="stars">${AROMAZ.products.stars(p.rating)}</span>
+            <span class="rating-value">${p.rating}</span>
+            <span style="color: var(--c-gray-600); font-size: var(--fs-sm);">(${p.reviewsCount} reseñas)</span>
+          </div>
+
+          <p class="social-proof"><i class="fas fa-fire"></i> <strong>+${soldCount}</strong> personas ya compraron esta fragancia este mes</p>
+          ${stockMsg ? `<p class="stock-indicator"><i class="fas fa-bolt"></i> ${stockMsg}</p>` : ''}
+
+          <p class="detail-description">${p.descripcion}</p>
+
+          ${(p.notas.salida.length || p.notas.corazon.length || p.notas.fondo.length) ? `
+          <div class="notes-pyramid">
+            <h4><i class="fas fa-flask"></i> Pirámide olfativa</h4>
+            ${p.notas.salida.length ? `<div class="notes-row"><span class="notes-label">Salida</span><span class="notes-list">${p.notas.salida.join(' · ')}</span></div>` : ''}
+            ${p.notas.corazon.length ? `<div class="notes-row"><span class="notes-label">Corazón</span><span class="notes-list">${p.notas.corazon.join(' · ')}</span></div>` : ''}
+            ${p.notas.fondo.length ? `<div class="notes-row"><span class="notes-label">Fondo</span><span class="notes-list">${p.notas.fondo.join(' · ')}</span></div>` : ''}
+          </div>` : ''}
+
+          <div class="presentations">
+            <h4>Presentación</h4>
+            <div class="presentation-options" data-presentations>
+              ${presentaciones.map((v, i) => {
+                const isRecom = v.tamanio === '50ml' && v.disponible;
+                return `
+                <div class="presentation-option ${i === initialIdx ? 'is-active' : ''} ${!v.disponible ? 'is-out' : ''}" data-idx="${i}">
+                  <span class="pres-size">${v.tamanio}</span>
+                  <span class="pres-price">${AROMAZ.formatMoney(v.precio)}</span>
+                  ${!v.disponible ? '<span class="pres-badge" style="background:var(--c-gray-400)">Sin stock</span>' : (isRecom ? '<span class="pres-badge">Popular</span>' : '')}
+                </div>`;
+              }).join('')}
+            </div>
+          </div>
+
+          <div class="quantity-selector" style="margin-top: var(--sp-5);">
+            <button data-qty="-1" aria-label="Quitar uno">−</button>
+            <input type="number" value="1" min="1" max="99" data-qty-input>
+            <button data-qty="+1" aria-label="Agregar uno">+</button>
+          </div>
+
+          <div class="cta-stack">
+            <button class="btn btn-primary btn-lg btn-block" data-add-cart>
+              <i class="fas fa-cart-plus"></i> Agregar al carrito · <span data-total-price>${AROMAZ.formatMoney(presentaciones[initialIdx]?.precio || 0)}</span>
+            </button>
+            <a href="#" class="btn btn-whatsapp btn-block" data-wa-product target="_blank" rel="noopener">
+              <i class="fab fa-whatsapp"></i> Consultar por WhatsApp
+            </a>
+            <button class="btn btn-outline btn-block btn-favorite-detail" data-sku="${p.sku}">
+              <i class="far fa-heart"></i> <span>${AROMAZ.favorites.has(p.sku) ? 'En favoritos' : 'Agregar a favoritos'}</span>
+            </button>
+          </div>
+
+          <div class="detail-meta">
+            <div class="detail-meta-item"><i class="fas fa-truck-fast"></i><span>Envío gratis en compras +$50.000</span></div>
+            <div class="detail-meta-item"><i class="fas fa-shield-halved"></i><span>Compra 100% segura · Pago por MercadoPago o transferencia</span></div>
+            <div class="detail-meta-item"><i class="fas fa-box"></i><span>Despacho en 24hs hábiles</span></div>
+            <div class="detail-meta-item"><i class="fas fa-rotate-left"></i><span>Cambios sin complicaciones</span></div>
+          </div>
+        </div>
+      `;
+
+      // Tabs
+      const tabsHtml = `
+        <div class="tabs-nav">
+          <button class="tab-trigger is-active" data-tab="desc">Descripción</button>
+          <button class="tab-trigger" data-tab="notes">Notas olfativas</button>
+          <button class="tab-trigger" data-tab="howto">Cómo usar</button>
+          <button class="tab-trigger" data-tab="shipping">Envíos y devoluciones</button>
+        </div>
+        <div class="tab-panel is-active" data-tab="desc">
+          <p>${p.descripcion}</p>
+          <p><strong>Categoría:</strong> ${p.categoriaNombre}</p>
+          <p><strong>Género:</strong> ${p.genero.charAt(0).toUpperCase() + p.genero.slice(1)}</p>
+          ${p.familiaOlfativa?.length ? `<p><strong>Familia olfativa:</strong> ${p.familiaOlfativa.join(', ')}</p>` : ''}
+          ${p.estacionIdeal?.length ? `<p><strong>Estación ideal:</strong> ${p.estacionIdeal.join(', ')}</p>` : ''}
+          ${p.momentoDia?.length ? `<p><strong>Momento del día:</strong> ${p.momentoDia.join(', ')}</p>` : ''}
+        </div>
+        <div class="tab-panel" data-tab="notes">
+          ${p.notas.salida.length ? `<p><strong>Notas de salida:</strong> ${p.notas.salida.join(', ')}</p>` : ''}
+          ${p.notas.corazon.length ? `<p><strong>Notas de corazón:</strong> ${p.notas.corazon.join(', ')}</p>` : ''}
+          ${p.notas.fondo.length ? `<p><strong>Notas de fondo:</strong> ${p.notas.fondo.join(', ')}</p>` : ''}
+          ${!p.notas.salida.length && !p.notas.corazon.length && !p.notas.fondo.length ? '<p>Consultá con nosotros por las notas específicas de este producto.</p>' : ''}
+        </div>
+        <div class="tab-panel" data-tab="howto">
+          <p>Para aprovechar al máximo tu perfume, seguí estos consejos:</p>
+          <ul style="padding-left: var(--sp-6); margin: var(--sp-3) 0;">
+            <li>Aplicá en puntos de pulso: cuello, muñecas, detrás de las orejas y en el pliegue del codo.</li>
+            <li>No frotes la piel después de aplicar, para no romper las moléculas aromáticas.</li>
+            <li>Guardá tu perfume en un lugar fresco, seco y lejos de la luz directa.</li>
+            <li>Para ambientes cálidos, las fragancias frescas y cítricas son ideales.</li>
+          </ul>
+        </div>
+        <div class="tab-panel" data-tab="shipping">
+          <p><strong>Envíos:</strong> Hacemos envíos a todo el país. CABA con moto en 24/48hs. Interior con OCA (3-5 días hábiles) o Andreani. Envío gratis en compras superiores a $50.000.</p>
+          <p><strong>Retiro por CABA:</strong> Podés retirar sin costo en nuestro punto de encuentro acordado previamente.</p>
+          <p><strong>Devoluciones:</strong> Por tratarse de productos de higiene personal, solo aceptamos cambios en casos de producto defectuoso de fábrica. Consultanos por WhatsApp.</p>
+        </div>
+      `;
+      const tabsEl = document.querySelector('[data-product-tabs]');
+      tabsEl.innerHTML = tabsHtml;
+      tabsEl.style.display = 'block';
+
+      // Helpers
+      function updateTotal() {
+        const pres = presentaciones[selectedIdx];
+        const totalEl = document.querySelector('[data-total-price]');
+        if (pres && totalEl) totalEl.textContent = AROMAZ.formatMoney(pres.precio * selectedQty);
+      }
+
+      function updateWA() {
+        const pres = presentaciones[selectedIdx];
+        document.querySelectorAll('[data-wa-product]').forEach(a => {
+          a.href = AROMAZ.whatsappLink(AROMAZ.wa.productMessage(p, pres));
+        });
+      }
+      updateWA();
+
+      // Gallery thumbs
+      container.querySelectorAll('.gallery-thumb').forEach(th => {
+        th.addEventListener('click', () => {
+          container.querySelectorAll('.gallery-thumb').forEach(t => t.classList.remove('is-active'));
+          th.classList.add('is-active');
+          const main = container.querySelector('#mainImage');
+          main.src = th.dataset.img;
+        });
+      });
+
+      // Presentations
+      container.querySelectorAll('.presentation-option:not(.is-out)').forEach(opt => {
+        opt.addEventListener('click', () => {
+          container.querySelectorAll('.presentation-option').forEach(o => o.classList.remove('is-active'));
+          opt.classList.add('is-active');
+          selectedIdx = parseInt(opt.dataset.idx, 10);
+          updateTotal();
+          updateWA();
+        });
+      });
+
+      // Quantity
+      const qtyInput = container.querySelector('[data-qty-input]');
+      container.querySelectorAll('[data-qty]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const delta = parseInt(btn.dataset.qty, 10);
+          selectedQty = Math.max(1, (parseInt(qtyInput.value, 10) || 1) + delta);
+          qtyInput.value = selectedQty;
+          updateTotal();
+        });
+      });
+      qtyInput.addEventListener('change', () => {
+        selectedQty = Math.max(1, parseInt(qtyInput.value, 10) || 1);
+        qtyInput.value = selectedQty;
+        updateTotal();
+      });
+
+      // Add to cart
+      container.querySelector('[data-add-cart]').addEventListener('click', () => {
+        const pres = presentaciones[selectedIdx];
+        if (!pres || !pres.disponible) {
+          AROMAZ.toast('Presentación sin stock', 'error');
+          return;
+        }
+        AROMAZ.cart.add({
+          sku: p.sku,
+          skuVariante: pres.sku,
+          nombre: p.nombre,
+          equivalencia: p.equivalencia,
+          tamanio: pres.tamanio,
+          precio: pres.precio,
+          imagen: p.imagenPrincipal,
+          slug: p.slug,
+          cantidad: selectedQty
+        });
+      });
+
+      // Favorite button state sync
+      const favBtn = container.querySelector('.btn-favorite-detail');
+      favBtn.addEventListener('click', () => {
+        const added = AROMAZ.favorites.toggle(p.sku);
+        favBtn.querySelector('span').textContent = added ? 'En favoritos' : 'Agregar a favoritos';
+        favBtn.querySelector('i').className = added ? 'fas fa-heart' : 'far fa-heart';
+        AROMAZ.toast(added ? 'Agregado a favoritos' : 'Eliminado de favoritos', added ? 'success' : '');
+      });
+
+      // GA4 view_item
+      if (window.gtag) {
+        gtag('event', 'view_item', {
+          currency: 'ARS',
+          value: p.precioDesde,
+          items: [{ item_id: p.sku, item_name: p.nombre, price: p.precioDesde }]
+        });
+      }
+
+      // Related
+      const related = await AROMAZ.products.related(p, 6);
+      document.querySelector('[data-related]').innerHTML = related.map(r => AROMAZ.products.renderCard(r)).join('');
+    })();
+  </script>
+</body>
+</html>

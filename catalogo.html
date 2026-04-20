@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Catálogo de Perfumes — Aromaz Perfum Shop</title>
+  <meta name="description" content="Explorá más de 220 fragancias: femeninos, masculinos, unisex, body splash y discovery sets. Filtrá por género, familia olfativa, precio y estación.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="icon" type="image/jpeg" href="images/logo/aromaz-instagram.jpg">
+</head>
+<body>
+  <div id="layout-header"></div>
+
+  <main>
+    <section class="page-hero">
+      <div class="container">
+        <span class="eyebrow">222 fragancias</span>
+        <h1>Nuestro <em>catálogo</em></h1>
+        <p>Encontrá la fragancia que te identifica. Filtrá por género, familia, precio o estación ideal.</p>
+      </div>
+    </section>
+
+    <div class="container">
+      <div class="breadcrumb">
+        <a href="index.html">Inicio</a>
+        <span class="separator">/</span>
+        <span>Catálogo</span>
+      </div>
+    </div>
+
+    <section class="container">
+      <div class="catalog-layout">
+        <!-- FILTROS -->
+        <aside class="catalog-filters" data-filters aria-label="Filtros">
+          <div class="filters-header">
+            <h3><i class="fas fa-filter"></i> Filtros</h3>
+            <button class="btn-clear-filters" data-clear-filters>Limpiar</button>
+          </div>
+
+          <div class="filter-group">
+            <h4>Categoría <i class="fas fa-chevron-down chevron"></i></h4>
+            <div class="filter-body" data-filter-group="categoria"></div>
+          </div>
+
+          <div class="filter-group">
+            <h4>Género <i class="fas fa-chevron-down chevron"></i></h4>
+            <div class="filter-body" data-filter-group="genero"></div>
+          </div>
+
+          <div class="filter-group">
+            <h4>Familia olfativa <i class="fas fa-chevron-down chevron"></i></h4>
+            <div class="filter-body" data-filter-group="familiaOlfativa"></div>
+          </div>
+
+          <div class="filter-group">
+            <h4>Estación ideal <i class="fas fa-chevron-down chevron"></i></h4>
+            <div class="filter-body" data-filter-group="estacionIdeal"></div>
+          </div>
+
+          <div class="filter-group">
+            <h4>Momento del día <i class="fas fa-chevron-down chevron"></i></h4>
+            <div class="filter-body" data-filter-group="momentoDia"></div>
+          </div>
+
+          <div class="filter-group">
+            <h4>Precio <i class="fas fa-chevron-down chevron"></i></h4>
+            <div class="filter-body">
+              <div class="filter-price-inputs">
+                <input type="number" id="priceMin" placeholder="Mín" min="0">
+                <span>–</span>
+                <input type="number" id="priceMax" placeholder="Máx" min="0">
+              </div>
+              <button class="btn btn-sm btn-dark" data-apply-price style="margin-top: var(--sp-3); width:100%;">Aplicar</button>
+            </div>
+          </div>
+
+          <div class="filter-group">
+            <h4>Destacados <i class="fas fa-chevron-down chevron"></i></h4>
+            <div class="filter-body">
+              <label class="filter-option">
+                <input type="checkbox" data-filter-flag="bestseller" value="1">
+                <span>Más vendidos</span>
+              </label>
+              <label class="filter-option">
+                <input type="checkbox" data-filter-flag="stock" value="1">
+                <span>Con stock</span>
+              </label>
+            </div>
+          </div>
+
+          <button class="btn btn-dark btn-block" data-close-filters style="display:none; margin-top:var(--sp-5);">
+            Ver resultados
+          </button>
+        </aside>
+
+        <!-- MAIN CATALOGO -->
+        <div class="catalog-main">
+          <div class="catalog-header">
+            <div class="catalog-count"><strong data-count>0</strong> productos</div>
+            <div style="display:flex; gap:var(--sp-3); align-items:center;">
+              <button class="btn-filter-mobile" data-open-filters>
+                <i class="fas fa-filter"></i> Filtrar
+              </button>
+              <div class="catalog-sort">
+                <label for="sort">Ordenar:</label>
+                <select id="sort" data-sort>
+                  <option value="relevancia">Relevancia</option>
+                  <option value="precio-asc">Precio: menor a mayor</option>
+                  <option value="precio-desc">Precio: mayor a menor</option>
+                  <option value="nombre">Nombre A-Z</option>
+                  <option value="bestseller">Más vendidos primero</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="active-filters" data-active-filters></div>
+
+          <div class="product-grid" data-products>
+            <div class="spinner"></div>
+          </div>
+
+          <div class="pagination" data-pagination></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="layout-footer"></div>
+
+  <script src="js/config.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/whatsapp.js"></script>
+  <script src="js/products.js"></script>
+  <script src="js/layout.js"></script>
+  <script src="js/main.js"></script>
+
+  <script>
+    AROMAZ.layout.render({
+      activeNav: 'catalog',
+      title: 'Catálogo de Perfumes — Aromaz Perfum Shop',
+      description: 'Explorá más de 220 fragancias. Filtrá por género, familia, precio y estación.',
+      path: '/catalogo'
+    });
+
+    (async function () {
+      const products = await AROMAZ.products.all();
+      const PER_PAGE = 20;
+
+      // Estado desde URL
+      const params = new URLSearchParams(window.location.search);
+      const state = {
+        filters: {
+          categoria: new Set(params.get('categoria')?.split(',').filter(Boolean) || []),
+          genero: new Set(params.get('genero')?.split(',').filter(Boolean) || []),
+          familiaOlfativa: new Set(params.get('familia')?.split(',').filter(Boolean) || []),
+          estacionIdeal: new Set(params.get('estacion')?.split(',').filter(Boolean) || []),
+          momentoDia: new Set(params.get('momento')?.split(',').filter(Boolean) || []),
+          bestseller: params.get('bestseller') === '1',
+          stock: params.get('stock') === '1',
+          priceMin: parseInt(params.get('pmin'), 10) || null,
+          priceMax: parseInt(params.get('pmax'), 10) || null,
+          q: params.get('q') || ''
+        },
+        sort: params.get('sort') || 'relevancia',
+        page: parseInt(params.get('page'), 10) || 1
+      };
+
+      // Sincronizar estado -> URL
+      function syncURL() {
+        const p = new URLSearchParams();
+        if (state.filters.categoria.size) p.set('categoria', [...state.filters.categoria].join(','));
+        if (state.filters.genero.size) p.set('genero', [...state.filters.genero].join(','));
+        if (state.filters.familiaOlfativa.size) p.set('familia', [...state.filters.familiaOlfativa].join(','));
+        if (state.filters.estacionIdeal.size) p.set('estacion', [...state.filters.estacionIdeal].join(','));
+        if (state.filters.momentoDia.size) p.set('momento', [...state.filters.momentoDia].join(','));
+        if (state.filters.bestseller) p.set('bestseller', '1');
+        if (state.filters.stock) p.set('stock', '1');
+        if (state.filters.priceMin) p.set('pmin', state.filters.priceMin);
+        if (state.filters.priceMax) p.set('pmax', state.filters.priceMax);
+        if (state.filters.q) p.set('q', state.filters.q);
+        if (state.sort && state.sort !== 'relevancia') p.set('sort', state.sort);
+        if (state.page > 1) p.set('page', state.page);
+        const s = p.toString();
+        history.replaceState(null, '', s ? `?${s}` : window.location.pathname);
+      }
+
+      function matches(p) {
+        const f = state.filters;
+        if (f.categoria.size && !f.categoria.has(p.categoria)) return false;
+        if (f.genero.size && !f.genero.has(p.genero)) return false;
+        if (f.familiaOlfativa.size && !(p.familiaOlfativa || []).some(x => f.familiaOlfativa.has(x))) return false;
+        if (f.estacionIdeal.size && !(p.estacionIdeal || []).some(x => f.estacionIdeal.has(x))) return false;
+        if (f.momentoDia.size && !(p.momentoDia || []).some(x => f.momentoDia.has(x))) return false;
+        if (f.bestseller && !p.bestseller) return false;
+        if (f.stock && p.stockTotal <= 0) return false;
+        if (f.priceMin && p.precioDesde < f.priceMin) return false;
+        if (f.priceMax && p.precioDesde > f.priceMax) return false;
+        if (f.q) {
+          const q = f.q.toLowerCase();
+          const hay = (p.nombre + ' ' + p.equivalencia + ' ' + (p.familiaOlfativa || []).join(' ')).toLowerCase();
+          if (!hay.includes(q)) return false;
+        }
+        return true;
+      }
+
+      function sort(list) {
+        const copy = list.slice();
+        switch (state.sort) {
+          case 'precio-asc': copy.sort((a, b) => a.precioDesde - b.precioDesde); break;
+          case 'precio-desc': copy.sort((a, b) => b.precioDesde - a.precioDesde); break;
+          case 'nombre': copy.sort((a, b) => a.nombre.localeCompare(b.nombre)); break;
+          case 'bestseller': copy.sort((a, b) => (b.bestseller ? 1 : 0) - (a.bestseller ? 1 : 0)); break;
+          default: copy.sort((a, b) => ((b.bestseller?1:0) - (a.bestseller?1:0)) || b.stockTotal - a.stockTotal);
+        }
+        return copy;
+      }
+
+      // Render filtros dinámicos con contadores
+      function renderFilters() {
+        const groups = {
+          categoria: { label: 'Categoría', getter: p => [p.categoria], names: { 'perfume': 'Perfumes', 'body_splash': 'Body Splash', 'discovery-set': 'Discovery Sets' } },
+          genero: { label: 'Género', getter: p => [p.genero], names: { 'femenino': 'Femenino', 'masculino': 'Masculino', 'unisex': 'Unisex' } },
+          familiaOlfativa: { label: 'Familia', getter: p => p.familiaOlfativa || [] },
+          estacionIdeal: { label: 'Estación', getter: p => p.estacionIdeal || [] },
+          momentoDia: { label: 'Momento', getter: p => p.momentoDia || [] }
+        };
+
+        for (const [key, cfg] of Object.entries(groups)) {
+          const container = document.querySelector(`[data-filter-group="${key}"]`);
+          if (!container) continue;
+          const counts = {};
+          for (const p of products) {
+            for (const v of cfg.getter(p)) {
+              if (!v) continue;
+              counts[v] = (counts[v] || 0) + 1;
+            }
+          }
+          const options = Object.entries(counts).sort((a, b) => b[1] - a[1]);
+          container.innerHTML = options.map(([val, count]) => {
+            const label = cfg.names?.[val] || (val.charAt(0).toUpperCase() + val.slice(1));
+            const checked = state.filters[key].has(val) ? 'checked' : '';
+            return `<label class="filter-option">
+              <input type="checkbox" data-filter-key="${key}" value="${val}" ${checked}>
+              <span>${label}</span>
+              <span class="count">(${count})</span>
+            </label>`;
+          }).join('');
+        }
+      }
+
+      function renderActiveFilters() {
+        const container = document.querySelector('[data-active-filters]');
+        const chips = [];
+        const addChip = (key, val, label) => chips.push({ key, val, label });
+
+        for (const key of ['categoria', 'genero', 'familiaOlfativa', 'estacionIdeal', 'momentoDia']) {
+          for (const v of state.filters[key]) addChip(key, v, v.charAt(0).toUpperCase() + v.slice(1));
+        }
+        if (state.filters.bestseller) addChip('flag', 'bestseller', 'Más vendidos');
+        if (state.filters.stock) addChip('flag', 'stock', 'Con stock');
+        if (state.filters.priceMin) addChip('priceMin', null, `Desde $${state.filters.priceMin.toLocaleString('es-AR')}`);
+        if (state.filters.priceMax) addChip('priceMax', null, `Hasta $${state.filters.priceMax.toLocaleString('es-AR')}`);
+        if (state.filters.q) addChip('q', null, `"${state.filters.q}"`);
+
+        container.innerHTML = chips.map(c => `
+          <span class="active-filter-chip">
+            ${c.label}
+            <button data-remove-chip data-key="${c.key}" data-val="${c.val || ''}" aria-label="Quitar"><i class="fas fa-times"></i></button>
+          </span>
+        `).join('');
+        container.style.display = chips.length ? 'flex' : 'none';
+      }
+
+      function renderProducts() {
+        const grid = document.querySelector('[data-products]');
+        const countEl = document.querySelector('[data-count]');
+        const filtered = sort(products.filter(matches));
+        countEl.textContent = filtered.length;
+
+        if (filtered.length === 0) {
+          grid.innerHTML = `
+            <div class="no-results" style="grid-column: 1 / -1;">
+              <i class="fas fa-face-sad-tear"></i>
+              <h3>No encontramos productos</h3>
+              <p>Probá ajustar los filtros o limpiar la búsqueda.</p>
+              <button class="btn btn-dark" data-clear-filters-inline>Limpiar filtros</button>
+            </div>
+          `;
+          document.querySelector('[data-pagination]').innerHTML = '';
+          return;
+        }
+
+        const totalPages = Math.ceil(filtered.length / PER_PAGE);
+        if (state.page > totalPages) state.page = 1;
+        const pageItems = filtered.slice((state.page - 1) * PER_PAGE, state.page * PER_PAGE);
+        grid.innerHTML = pageItems.map(p => AROMAZ.products.renderCard(p)).join('');
+
+        renderPagination(totalPages);
+      }
+
+      function renderPagination(totalPages) {
+        const container = document.querySelector('[data-pagination]');
+        if (totalPages <= 1) { container.innerHTML = ''; return; }
+        const p = state.page;
+        const pages = [];
+        pages.push({ type: 'prev', disabled: p === 1 });
+        for (let i = 1; i <= totalPages; i++) {
+          if (i === 1 || i === totalPages || Math.abs(i - p) <= 1) {
+            pages.push({ type: 'num', n: i, active: i === p });
+          } else if (i === 2 || i === totalPages - 1) {
+            pages.push({ type: 'ellipsis' });
+          }
+        }
+        pages.push({ type: 'next', disabled: p === totalPages });
+
+        container.innerHTML = pages.map(pg => {
+          if (pg.type === 'prev') return `<button data-page="prev" ${pg.disabled?'disabled':''}><i class="fas fa-chevron-left"></i></button>`;
+          if (pg.type === 'next') return `<button data-page="next" ${pg.disabled?'disabled':''}><i class="fas fa-chevron-right"></i></button>`;
+          if (pg.type === 'ellipsis') return `<span class="pagination-ellipsis">…</span>`;
+          return `<button data-page="${pg.n}" class="${pg.active?'is-active':''}">${pg.n}</button>`;
+        }).filter(Boolean).join('');
+      }
+
+      function update() {
+        renderActiveFilters();
+        renderProducts();
+        syncURL();
+        window.scrollTo({ top: document.querySelector('.catalog-main').offsetTop - 100, behavior: 'smooth' });
+      }
+
+      // ==== Event bindings ====
+      document.addEventListener('change', (e) => {
+        const cb = e.target.closest('input[data-filter-key]');
+        if (cb) {
+          const key = cb.dataset.filterKey;
+          const val = cb.value;
+          if (cb.checked) state.filters[key].add(val);
+          else state.filters[key].delete(val);
+          state.page = 1;
+          renderFilters();
+          update();
+          if (window.gtag) gtag('event', 'filter_products', { filter_key: key, filter_value: val });
+          return;
+        }
+        const flag = e.target.closest('input[data-filter-flag]');
+        if (flag) {
+          state.filters[flag.dataset.filterFlag] = flag.checked;
+          state.page = 1;
+          update();
+          return;
+        }
+        const sortSel = e.target.closest('[data-sort]');
+        if (sortSel) {
+          state.sort = sortSel.value;
+          state.page = 1;
+          update();
+        }
+      });
+
+      document.addEventListener('click', (e) => {
+        if (e.target.closest('[data-apply-price]')) {
+          state.filters.priceMin = parseInt(document.getElementById('priceMin').value, 10) || null;
+          state.filters.priceMax = parseInt(document.getElementById('priceMax').value, 10) || null;
+          state.page = 1;
+          update();
+        }
+        if (e.target.closest('[data-clear-filters], [data-clear-filters-inline]')) {
+          state.filters = { categoria: new Set(), genero: new Set(), familiaOlfativa: new Set(), estacionIdeal: new Set(), momentoDia: new Set(), bestseller: false, stock: false, priceMin: null, priceMax: null, q: '' };
+          state.page = 1;
+          document.getElementById('priceMin').value = '';
+          document.getElementById('priceMax').value = '';
+          document.querySelectorAll('[data-filter-key], [data-filter-flag]').forEach(cb => cb.checked = false);
+          renderFilters();
+          update();
+        }
+        const removeChip = e.target.closest('[data-remove-chip]');
+        if (removeChip) {
+          const k = removeChip.dataset.key;
+          const v = removeChip.dataset.val;
+          if (k === 'flag') state.filters[v] = false;
+          else if (k === 'priceMin') { state.filters.priceMin = null; document.getElementById('priceMin').value = ''; }
+          else if (k === 'priceMax') { state.filters.priceMax = null; document.getElementById('priceMax').value = ''; }
+          else if (k === 'q') state.filters.q = '';
+          else state.filters[k]?.delete?.(v);
+          state.page = 1;
+          renderFilters();
+          update();
+        }
+        const pageBtn = e.target.closest('[data-page]');
+        if (pageBtn) {
+          const pg = pageBtn.dataset.page;
+          const totalPages = Math.ceil(products.filter(matches).length / PER_PAGE);
+          if (pg === 'prev' && state.page > 1) state.page--;
+          else if (pg === 'next' && state.page < totalPages) state.page++;
+          else if (!isNaN(parseInt(pg, 10))) state.page = parseInt(pg, 10);
+          update();
+        }
+        if (e.target.closest('[data-open-filters]')) {
+          document.querySelector('[data-filters]').classList.add('is-open');
+          document.querySelector('[data-close-filters]').style.display = 'block';
+        }
+        if (e.target.closest('[data-close-filters]')) {
+          document.querySelector('[data-filters]').classList.remove('is-open');
+        }
+      });
+
+      // Price inputs initial values
+      if (state.filters.priceMin) document.getElementById('priceMin').value = state.filters.priceMin;
+      if (state.filters.priceMax) document.getElementById('priceMax').value = state.filters.priceMax;
+      if (state.filters.bestseller) document.querySelector('[data-filter-flag="bestseller"]').checked = true;
+      if (state.filters.stock) document.querySelector('[data-filter-flag="stock"]').checked = true;
+      document.getElementById('sort').value = state.sort;
+
+      renderFilters();
+      update();
+    })();
+  </script>
+</body>
+</html>
